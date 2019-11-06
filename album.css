@@ -2,7 +2,11 @@
     padding-top: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 0;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-image: url(img/mountain.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: white;
   }
   @media (min-width: 768px) {
     .jumbotron {
@@ -11,31 +15,26 @@
     }
   }
   
-  .jumbotron p:last-child {
-    margin-bottom: 0;
+  .lead {
+    color: white;
+    font-weight: 300;
   }
   
   .jumbotron-heading {
-    font-weight: 300;
+    font-weight: 500;
+    color: white;
+
   }
   
   .jumbotron .container {
     max-width: 40rem;
   }
-  
+
   footer {
     padding-top: 3rem;
     padding-bottom: 3rem;
   }
   
-  footer p {
-    margin-bottom: .25rem;
-  }
-
-  #album{
-      display: none;
-  }
-
   #return-to-top {
     position: fixed;
     bottom: 20px;

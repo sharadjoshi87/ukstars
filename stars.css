@@ -1,3 +1,35 @@
+.jumbotron {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-bottom: 0;
+    /* background-color: #fff; */
+    background-image: url(img/hill.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: white;
+  }
+  @media (min-width: 768px) {
+    .jumbotron {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+  
+  .lead {
+    color: white;
+    font-weight: 300;
+  }
+  
+  .jumbotron-heading {
+    font-weight: 500;
+    color: white;
+
+  }
+  
+  .jumbotron .container {
+    max-width: 40rem;
+  }
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -112,5 +144,9 @@ h3{
 }
 
 #tiles{
-    margin-top:65px;
+    margin-top:70px;
+}
+
+.modal-body{
+  height: fit-content;
 }
