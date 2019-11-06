@@ -43,7 +43,7 @@ h3{
 
 #team i{
     font-size: 26px;
-    color: #555;
+    color: rgb(40, 92, 66);
 }
 
 #team p{
@@ -52,14 +52,14 @@ h3{
 
 #team .card{
     border-radius: 0;
-    box-shadow: 5px 5px 15px rgb(161, 228, 194);
+    box-shadow: 5px 5px 15px rgb(40, 92, 66);
     transition: all 0.3s ease-in;
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
 }
 
 #team .card:hover{
-    background: rgb(161, 228, 194);
+    background: rgb(40 , 92, 66);
     color: #fff;
     border-radius: 5px;
     border: none;
@@ -70,4 +70,47 @@ h3{
     color: #fff;
 }
 
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgb(40, 92, 66);
+    background: rgba(40, 92, 66, 0.7);
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 16px;
+    top: 13px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top:hover {
+    background: rgba(40, 92, 66, 0.9);
+}
+#return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+}
 
+#tiles{
+    margin-top:70px;
+}
