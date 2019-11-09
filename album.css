@@ -2,11 +2,10 @@
     padding-top: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 0;
-    /* background-color: #fff; */
     background-image: url(img/mountain.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
-    color: white;
+    color: rgb(40, 92, 66);
   }
   @media (min-width: 768px) {
     .jumbotron {
@@ -16,13 +15,13 @@
   }
   
   .lead {
-    color: white;
+    color: rgb(215, 235, 36);
     font-weight: 300;
   }
   
   .jumbotron-heading {
     font-weight: 500;
-    color: white;
+    color: rgb(40, 92, 66);
 
   }
   
@@ -74,4 +73,35 @@
 #return-to-top:hover i {
     color: #fff;
     top: 5px;
+}
+
+.jumbotron video {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width:100%;
+  height:100%;
+  /*  object-fit is not supported on IE  */
+  object-fit: cover;
+  opacity:0.5;
+}
+
+video{
+  width: 100%;
+  height: 25%;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
 }

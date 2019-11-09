@@ -16,3 +16,20 @@ $('#return-to-top').click(function() {      // When arrow is clicked
         scrollTop : 0                       // Scroll to top of body
     }, 500);
 });
+
+function deferVideo() {
+
+    //defer html5 video loading
+  $("video source").each(function() {
+    var sourceFile = $(this).attr("data-src");
+    $(this).attr("src", sourceFile);
+    var video = this.parentElement;
+    video.load();
+    // uncomment if video is not autoplay
+    //video.play();
+  });
+
+}
+window.onload = deferVideo;
+
+

@@ -6,7 +6,7 @@
     background-image: url(img/hill.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
-    color: white;
+    color: rgb(40, 92, 66);
   }
   @media (min-width: 768px) {
     .jumbotron {
@@ -16,13 +16,13 @@
   }
   
   .lead {
-    color: white;
+    color: rgb(215, 235, 36);
     font-weight: 300;
   }
   
   .jumbotron-heading {
     font-weight: 500;
-    color: white;
+    color: rgb(40, 92, 66);
 
   }
   
@@ -145,8 +145,4 @@ h3{
 
 #tiles{
     margin-top:70px;
-}
-
-.modal-body{
-  height: fit-content;
 }
