@@ -106,8 +106,22 @@ video{
   }
 }
 
+@media (max-width: 835px) {
+  #logo {
+    display: none;
+  }
+}
+
 #logo{
-  width: 50px;
-  height: 40px;
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+  top: 56px;
+  position: absolute;
+}
+
+.fixed-top{
+  z-index: 0;
+  position: absolute;
 }
 
