@@ -56,11 +56,11 @@ body{
     font-weight: 400;
     color: #777;
     width: 100%;
-    max-width: 100%;
-    will-change: position;
+    /* max-width: 100%;
+    will-change: position; */
 }
 
-body.modal-open {
+/* body.modal-open {
   position: fixed;
   top:    0;
   right:  0;
@@ -79,6 +79,12 @@ body.modal-open {
 .modal-body {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+} */
+
+.freezePage{
+  overflow: hidden;
+  height: 100%;
+  position: relative;
 }
 
 h1{

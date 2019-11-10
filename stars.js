@@ -16,3 +16,12 @@ $('#return-to-top').click(function() {      // When arrow is clicked
         scrollTop : 0                       // Scroll to top of body
     }, 500);
 });
+
+$('.modal').on('shown.bs.modal', function (e) {
+    $('html').addClass('freezePage'); 
+    $('body').addClass('freezePage');
+  });
+  $('.modal').on('hidden.bs.modal', function (e) {
+    $('html').removeClass('freezePage');
+    $('body').removeClass('freezePage');
+  });
