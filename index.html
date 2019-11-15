@@ -26,19 +26,19 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="index.html"><!--<img src="img/logo.png" id="logo" alt="logo image">-->Galaxy Of UK Stars!</a>
+    <a class="navbar-brand" href="index.html">
+      <!--<img src="img/logo.png" id="logo" alt="logo image">-->Galaxy Of UK Stars!</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="stars.html">Team </a>
+        <a class="nav-link" href="team.html">Team </a>
       </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+    <form class="form-inline my-2 my-lg-0">
+      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#VidModal">Feeling Lucky !</button>
+    </form>
   </div>
 </nav>
 
@@ -53,12 +53,27 @@
     </div>
 
     <br>
-    <div class="container">
-      <video autoplay loop muted src="videos/3.m4v">Myar Pahad</video>
-      <h4 class="text-center">The Unforgettable</h4>
-    </div>
-
   </main>
+
+  <div class="modal fade" id="VidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="text-center">The Unforgettable - Village View</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <video autoplay loop muted src="videos/3.m4v">Myar Pahad</video>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Return to Top -->
   <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
 
@@ -69,9 +84,10 @@
         <small>&copy; Copyright 2019, galaxyofukstars.in. All Rights Reserved.</small><br><br>
         <small>Source : <i style="font-size:24px" class="fa">&#xf08c;</i> <i style="font-size:24px"
             class="fa">&#xf232;</i> <i style="font-size:24px" class="fa">&#xf268;</i></small>
-            <br><br>
-            <small> Logo made by <a href="https://www.designevo.com/logo-maker/" title="Free Online Logo Maker">DesignEvo free logo creator</a> </small>
-          </p>
+        <br><br>
+        <small> Logo made by <a href="https://www.designevo.com/logo-maker/" title="Free Online Logo Maker">DesignEvo
+            free logo creator</a> </small>
+      </p>
     </div>
   </footer>
 
