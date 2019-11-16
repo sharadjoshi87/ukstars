@@ -19,10 +19,14 @@
     #logo {
       display: none;
     }
+    .lead {
+      color: rgb(00, 00, 00);
+      font-weight: 300;
+    }
   }
   
   .lead {
-    color: rgb(215, 235, 36);
+    color: rgb(215, 235, 36,0);
     font-weight: 300;
   }
   
