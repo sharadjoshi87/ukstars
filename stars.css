@@ -212,3 +212,10 @@ h3{
   z-index: 0;
   position: absolute;
 }
+
+@media(min-width:769px){
+  .fixed-top {
+      z-index: 0;
+      position: absolute;
+  }
+  }
