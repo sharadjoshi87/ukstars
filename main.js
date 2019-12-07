@@ -32,4 +32,6 @@ function deferVideo() {
 }
 window.onload = deferVideo;
 
-
+// $(document).ready(function(){
+//     $("#VidModal").modal('show');
+// });
