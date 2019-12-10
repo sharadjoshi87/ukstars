@@ -129,3 +129,10 @@ video{
   position: absolute;
 }
 
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
