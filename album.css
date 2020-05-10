@@ -1,92 +1,97 @@
 .jumbotron {
-    padding-top: 13rem;
-    padding-bottom: 3rem;
-    margin-bottom: 0;
+  padding-top: 13rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-image: url(img/mountain.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  color: rgb(40, 92, 66);
+}
+
+@media (max-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     background-image: url(img/mountain.jpg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    color: rgb(40, 92, 66);
   }
-  @media (min-width: 768px) {
-    .jumbotron {
-      padding-top: 6rem;
-      padding-bottom: 6rem;
-    }
-  }
-  
-  .lead {
-    color: rgb(215, 235, 36,0);
-    font-weight: 300;
-  }
-  
-  .jumbotron-heading {
-    font-weight: 500;
-    color: rgb(40, 92, 66);
-
-  }
-  
-  .jumbotron .container {
-    max-width: 40rem;
-  }
-
-  footer {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-  
-  #return-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.7);
-    width: 50px;
-    height: 50px;
-    display: block;
-    text-decoration: none;
-    -webkit-border-radius: 35px;
-    -moz-border-radius: 35px;
-    border-radius: 35px;
-    display: none;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
 }
+
+.lead {
+  color: rgb(215, 235, 36, 0);
+  font-weight: 300;
+}
+
+.jumbotron-heading {
+  font-weight: 500;
+  color: rgb(40, 92, 66);
+
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#return-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.7);
+  width: 50px;
+  height: 50px;
+  display: block;
+  text-decoration: none;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  border-radius: 35px;
+  display: none;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
 #return-to-top i {
-    color: #fff;
-    margin: 0;
-    position: relative;
-    left: 16px;
-    top: 13px;
-    font-size: 19px;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+  color: #fff;
+  margin: 0;
+  position: relative;
+  left: 16px;
+  top: 13px;
+  font-size: 19px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
+
 #return-to-top:hover {
-    background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.9);
 }
+
 #return-to-top:hover i {
-    color: #fff;
-    top: 5px;
+  color: #fff;
+  top: 5px;
 }
 
 .jumbotron video {
   position: absolute;
   z-index: 1;
   top: 0;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   /*  object-fit is not supported on IE  */
   object-fit: cover;
-  opacity:0.5;
+  opacity: 0.5;
 }
 
-video{
+video {
   width: 100%;
   height: 25%;
 }
@@ -110,13 +115,14 @@ video{
   #logo {
     display: none;
   }
+
   .lead {
     color: rgb(00, 00, 00);
     font-weight: 300;
   }
 }
 
-#logo{
+#logo {
   width: 120px;
   height: 120px;
   z-index: 1;
@@ -124,7 +130,7 @@ video{
   position: absolute;
 }
 
-.fixed-top{
+.fixed-top {
   z-index: 0;
   position: absolute;
 }
