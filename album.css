@@ -6,6 +6,7 @@
   background-size: 100%;
   background-repeat: no-repeat;
   color: rgb(40, 92, 66);
+  background-position-y: center;
 }
 
 @media (max-width: 768px) {
@@ -14,6 +15,13 @@
     padding-bottom: 6rem;
     background-image: url(img/mountain.jpg);
   }
+}
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 450;
+    line-height: 0.2;
+    color: floralwhite;
+}
 }
 
 .lead {
@@ -117,9 +125,9 @@ video {
   }
 
   .lead {
-    color: rgb(00, 00, 00);
+    color: floralwhite;
     font-weight: 300;
-  }
+}
 }
 
 #logo {
