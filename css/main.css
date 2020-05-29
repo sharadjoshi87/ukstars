@@ -1,0 +1,536 @@
+.jumbotron {
+  padding-top: 13rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-size: 100%;
+  background-image: url(../img/hill.jpg);
+  background-repeat: no-repeat;
+  color: rgb(40, 92, 66);
+  background-position-y: center;
+}
+
+/* G Pant page CSS */
+.download_btn {
+  display: block;
+  background: orange;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 20px;
+  color: #222222;
+  font-size: 16px;
+  font-family: "Yellowtail", cursive;
+  position: relative;
+  overflow: hidden;
+}
+
+.download_btn span {
+  display: inline-block;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  height: 100%;
+  transition: all 400ms linear 0s;
+}
+
+audio {
+  width: 14rem;
+  height: 4rem;
+}
+
+/* X G Pant page CSS X */
+
+.active {
+  background-color: #e1e1e3;
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+.imgGirish {
+  width: 25rem;
+  height: 27rem;
+}
+
+#vision {
+  padding: 5rem;
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: bolder;
+  /* line-height: 0.2; */
+  color: #040404ab;
+}
+
+@media (max-width: 768px) {
+  .jumbotron {
+    padding-top: 5rem;
+    padding-bottom: 15px;
+    background-image: url(../img/mountain.jpg);
+  }
+
+  .display-4 {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    line-height: 0.2;
+    color: #040404ab;
+  }
+
+  .navbar-fixed-top {
+    position: relative;
+    top: auto;
+  }
+
+  .navbar-collapse {
+    max-height: none;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+
+  }
+}
+
+.lead {
+  color: #f8f9fa;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+.jumbotron-heading {
+  font-weight: 500;
+  color: rgb(40, 92, 66);
+
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#return-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.7);
+  width: 50px;
+  height: 50px;
+  display: block;
+  text-decoration: none;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  border-radius: 35px;
+  display: none;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#return-to-top i {
+  color: #fff;
+  margin: 0;
+  position: relative;
+  left: 16px;
+  top: 13px;
+  font-size: 19px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#return-to-top:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+#return-to-top:hover i {
+  color: #fff;
+  top: 5px;
+}
+
+.jumbotron video {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /*  object-fit is not supported on IE  */
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+video {
+  width: 100%;
+  height: 25%;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 835px) {
+  #logo {
+    display: none;
+  }
+
+  .lead {
+    color: #f8f9fa;
+    font-weight: bolder;
+  }
+
+  .imgGirish {
+    width: 250px;
+    height: 270px;
+  }
+
+  /* Harish pant page */
+  audio {
+    width: 26rem;
+    height: 4rem;
+  }
+}
+
+/* #logo {
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+  top: 56px;
+  position: absolute;
+} */
+
+.fixed-top {
+  z-index: 0;
+  position: absolute;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Team section CSS */
+
+#team_section img {
+  margin-top: -50px;
+}
+
+#team_section i {
+  font-size: 26px;
+  color: rgb(40, 92, 66);
+}
+
+#team_section p {
+  font-weight: 500;
+  text-align: justify;
+}
+
+#team_section .card {
+  border-radius: 0;
+  box-shadow: 5px 5px 15px rgb(40, 92, 66);
+  transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+}
+
+#team_section .card:hover {
+  background: rgb(40, 92, 66);
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 5px 5px 10px #9E9E9E;
+}
+
+#team_section .card:hover h3,
+#team_section .card:hover i {
+  color: #fff;
+}
+
+#tiles {
+  margin-top: 70px;
+}
+
+/* X  Team Section CSS    X */
+
+/* Pace CSS */
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: green;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+.pace .pace-progress-inner {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px green, 0 0 5px green;
+  opacity: 1.0;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -moz-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  -o-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+.pace .pace-activity {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  top: 15px;
+  right: 15px;
+  width: 14px;
+  height: 14px;
+  border: solid 2px transparent;
+  border-top-color: green;
+  border-left-color: green;
+  border-radius: 10px;
+  -webkit-animation: pace-spinner 350ms linear infinite;
+  -moz-animation: pace-spinner 350ms linear infinite;
+  -ms-animation: pace-spinner 350ms linear infinite;
+  -o-animation: pace-spinner 350ms linear infinite;
+  animation: pace-spinner 350ms linear infinite;
+}
+
+@-webkit-keyframes pace-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes pace-spinner {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes pace-spinner {
+  0% {
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes pace-spinner {
+  0% {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pace-spinner {
+  0% {
+    transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* XX Pace CSS XX */
+
+
+/* =======Contact Form====== */
+
+.contact-form {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  background: aliceblue;
+  padding: 20px 20px;
+  border-radius: 15px;
+  margin-left: 18rem;
+}
+
+.input-fields {
+  padding: 0 30px;
+}
+
+.input-fields .items {
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+.input-fields .items .label {
+  display: block;
+  font-size: 1em;
+  color: cadetblue;
+  text-transform: capitalize;
+  transition: all 0.5s ease;
+  padding-bottom: 5px;
+}
+
+.input-fields .items .input,
+.input-fields .items .text-area {
+  background: transparent;
+  border: 0;
+  border: 1px solid cadetblue;
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1em;
+  color: midnightblue;
+  border-radius: 3px;
+}
+
+.btnC {
+  margin: 0 30px;
+  background: darkgray;
+  color: aliceblue;
+  font-size: 1.25em;
+  padding: 10px 10px;
+  text-align: center;
+  /* text-transform: uppercase; */
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+
+.items #msg {
+  height: 100px;
+}
+
+
+/* jquery code */
+.input-fields .items .input.active .label {
+  font-size: 15px;
+  top: 0;
+}
+
+@media screen and (max-width: 750px) {
+  .input-fields {
+    padding: 0;
+  }
+
+  .contact-form{
+    margin-left: auto;
+  }
+
+  .btnC{
+    margin: 0;
+  }
+}
+
+#contact {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+/* XX ======Contact Form====== XX */
+
+/* Contact Form */
+
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: cadetblue;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+/* XX Contact Form XX  */

@@ -3,6 +3,20 @@ $(".nav-item .nav-link").on("click", function () {
   $(this).addClass("active");
 });
 
+// Contact Form Success Message
+function myFunction() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  document.getElementById('name').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('subject').value = '';
+  document.getElementById('msg').value = '';
+  // location.reload();
+}
+// XXXXXXX Contact Form Success Message
+
+
 // ===== Scroll to Top ==== 
 $(window).scroll(function () {
   if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
@@ -30,7 +44,7 @@ function deferVideo() {
   });
 
 }
-window.onload = deferVideo;
+// window.onload = deferVideo;
 var currentDate = new Date();
 
 var date = currentDate.getDate();
@@ -75,15 +89,20 @@ var yog = '';
 var Karan = '';
 var Var = '';
 
-$(document).ready(function (e) {
-  // $("#punchang").modal('show');
-  // $('#sunrise').html('sunrise');
-  // e.preventDefault();
-  var mymodal = $('#punchang');
-  // mymodal.find('.modal-body').text('hello');
-  setPunchangData();
-  mymodal.modal('show');
+$(window).on('beforeunload', function () {
+  $(window).scrollTop(0);
 });
+
+$(document).ready(function (e) {
+  var mymodal = $('#punchang');
+  setPunchangData();
+  setTimeout(function(){
+    mymodal.modal('show');
+}, 2000);
+  // mymodal.delay(50000).modal('show');
+});
+
+
 
 //०५:५८ ए. एम. ०६:४४ पी. एम.
 function setPunchangData() {
