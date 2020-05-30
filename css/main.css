@@ -474,11 +474,11 @@ video {
     padding: 0;
   }
 
-  .contact-form{
+  .contact-form {
     margin-left: auto;
   }
 
-  .btnC{
+  .btnC {
     margin: 0;
   }
 }
@@ -516,23 +516,127 @@ video {
 }
 
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 /* XX Contact Form XX  */
+
+/* ----------- iPad ----------- */
+/* Portrait */
+@media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .jumbotron {
+    padding-top: 11rem;
+    padding-bottom: 6rem;
+  }
+
+  .jumbotron .container h1 {
+    color: aliceblue;
+  }
+
+  .contact-form{
+    margin-left: 12rem;
+  }  
+}
+
+/* Landscape */
+@media only screen and (min-width: 768px) and (max-height: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .contact-form{
+    margin-left: 16rem;
+  }  
+}
+
+/* XX----------- iPad -----------XX */
+
+
+/* ----------- iPad Pro ----------- */
+
+/* Portrait */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .contact-form {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    background: aliceblue;
+    padding: 20px 20px;
+    border-radius: 15px;
+    margin-left: 15rem;
+  }
+
+  .jumbotron .container h1 {
+    color: aliceblue;
+  }
+
+  .lead {
+    color: #040404ab;
+    text-align: center;
+  }
+}
+
+/* Landscape */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .contact-form {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    background: aliceblue;
+    padding: 20px 20px;
+    border-radius: 15px;
+    margin-left: 26rem;
+  }
+
+  .jumbotron .container h1 {
+    color: aliceblue;
+  }
+
+  .lead {
+    color: #040404ab;
+    text-align: center;
+
+  }
+}
+
+/* XX----------- iPad Pro -----------XX */

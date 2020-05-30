@@ -3,6 +3,10 @@ $(".nav-item .nav-link").on("click", function () {
   $(this).addClass("active");
 });
 
+$('.nav-link').on('click',function() {
+  $('.navbar-collapse').collapse('hide');
+});
+
 // Contact Form Success Message
 function myFunction() {
   var x = document.getElementById("snackbar");
