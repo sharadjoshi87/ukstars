@@ -65,15 +65,16 @@ audio {
 
 @media (max-width: 768px) {
   .jumbotron {
-    padding-top: 5rem;
+    padding-top: 2rem;
     padding-bottom: 15px;
     background-image: url(../img/mountain.jpg);
+    background-position-y: inherit;
   }
 
   .display-4 {
     font-size: 2.5rem;
     font-weight: bolder;
-    line-height: 0.2;
+    /* line-height: 0.2; */
     color: #040404ab;
   }
 
@@ -199,8 +200,9 @@ video {
   }
 
   .lead {
-    color: #f8f9fa;
+    color: #040404ab;
     font-weight: bolder;
+    text-align: center;
   }
 
   .imgGirish {
