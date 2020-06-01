@@ -739,9 +739,9 @@
     </section>
     <!--x Our Team x-->
     <section>
-
+      <script type="text/javascript">var submitted = false;</script>
       <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-        onload="if(submitted) {window.location='galaxyofukstars.in' }"></iframe>
+        onload="if(submitted) {window.location='./pages/thanks.html' }"></iframe>
 
       <!-- Contact Form -->
       <div class="col-md-12 text-center" id="contact">
@@ -751,24 +751,24 @@
       <div class="col-md-6">
         <form
             action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdq_OZ-UjtoWPBDu31qk6IidUQWxpvDEhpourtGeP_dlWnVXg/formResponse"
-            method="POST" target="hidden_iframe" onsubmit="myFunction();">
+            method="POST" id="myform" target="hidden_iframe" onsubmit="submitted=true;">
             <div class="contact-form">
               <div class="input-fields">
                 <div class="items">
                   <label for="name" class="label">name</label>
-                  <input id="name" type="text" class="input" name="entry.1811641543" required>
+                  <input placeholder="Name" id="name" type="text" class="input" name="entry.1811641543" required>
                 </div>
                 <div class="items">
                   <label for="email" class="label">email</label>
-                  <input id="email" type="email" class="input" name="entry.1427790235" required>
+                  <input placeholder="Email" id="email" type="email" class="input" name="entry.1427790235" required>
                 </div>
                 <div class="items">
                   <label for="subject" class="label">subject</label>
-                  <input id="subject" type="text" class="input" name="entry.430190317" required>
+                  <input placeholder="Subject" id="subject" type="text" class="input" name="entry.430190317" required>
                 </div>
                 <div class="items">
                   <label for="msg" class="label">message</label>
-                  <textarea id="msg" class="text-area" name="entry.1342310772" required></textarea>
+                  <textarea placeholder="Your Message . . . " id="msg" class="text-area" name="entry.1342310772" required></textarea>
                 </div>
               </div>
               <div class="items">

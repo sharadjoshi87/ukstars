@@ -3,22 +3,9 @@ $(".nav-item .nav-link").on("click", function () {
   $(this).addClass("active");
 });
 
-$('.nav-link').on('click',function() {
+$('.nav-link').on('click', function () {
   $('.navbar-collapse').collapse('hide');
 });
-
-// Contact Form Success Message
-function myFunction() {
-  var x = document.getElementById("snackbar");
-  x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-  document.getElementById('name').value = '';
-  document.getElementById('email').value = '';
-  document.getElementById('subject').value = '';
-  document.getElementById('msg').value = '';
-  // location.reload();
-}
-// XXXXXXX Contact Form Success Message
 
 
 // ===== Scroll to Top ==== 
@@ -100,9 +87,10 @@ $(window).on('beforeunload', function () {
 $(document).ready(function (e) {
   var mymodal = $('#punchang');
   setPunchangData();
-  setTimeout(function(){
+  document.getElementById('myform').reset();
+  setTimeout(function () {
     mymodal.modal('show');
-}, 2000);
+  }, 2000);
   // mymodal.delay(50000).modal('show');
 });
 
