@@ -106,7 +106,7 @@ audio {
 }
 
 .lead {
-  color: #f8f9fa;
+  color: #040404ab;
   font-weight: bolder;
   font-size: x-large;
 }
@@ -421,7 +421,7 @@ video {
   background: aliceblue;
   padding: 20px 20px;
   border-radius: 15px;
-  margin-left: 26rem;
+  margin: auto;
 }
 
 .input-fields {
@@ -588,9 +588,9 @@ video {
     color: aliceblue;
   }
 
-  .contact-form {
+  /* .contact-form {
     margin-left: 12rem;
-  }
+  } */
 }
 
 /* Landscape */
@@ -614,7 +614,7 @@ video {
     background: aliceblue;
     padding: 20px 20px;
     border-radius: 15px;
-    margin-left: 15rem;
+    margin: auto;
   }
 
   .jumbotron .container h1 {
@@ -636,7 +636,7 @@ video {
     background: aliceblue;
     padding: 20px 20px;
     border-radius: 15px;
-    margin-left: 26rem;
+    margin: auto;
   }
 
   .jumbotron .container h1 {
