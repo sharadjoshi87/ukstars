@@ -6,13 +6,19 @@ var month = currentDate.getMonth(); //Be careful! January is 0 not 1
 var year = currentDate.getFullYear();
 var dateString = '';
 
-if (month <= 9) {
+if (month < 9) {
   if (date <= 9) {
     dateString = '0' + date + "-" + '0' + (month + 1) + "-" + year;
   } else if (date > 9) {
     dateString = date + "-" + '0' + (month + 1) + "-" + year;
   }
 } else if (month > 9) {
+  if (date <= 9) {
+    dateString = '0' + date + "-" + (month + 1) + "-" + year;
+  } else if (date > 9) {
+    dateString = date + "-" + (month + 1) + "-" + year;
+  }
+} else if (month == 9) {
   if (date <= 9) {
     dateString = '0' + date + "-" + (month + 1) + "-" + year;
   } else if (date > 9) {
