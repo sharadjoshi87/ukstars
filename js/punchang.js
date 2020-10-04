@@ -9,13 +9,13 @@ var dateString = '';
 if (month <= 9) {
   if (date <= 9) {
     dateString = '0' + date + "-" + '0' + (month + 1) + "-" + year;
-  } else {
+  } else if (date > 9) {
     dateString = date + "-" + '0' + (month + 1) + "-" + year;
   }
-} else {
+} else if (month > 9) {
   if (date <= 9) {
     dateString = '0' + date + "-" + (month + 1) + "-" + year;
-  } else {
+  } else if (date > 9) {
     dateString = date + "-" + (month + 1) + "-" + year;
   }
 }
