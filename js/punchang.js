@@ -2563,7 +2563,7 @@ case '19-07-2021':
 	Karan = '|| Taitila upto 11:16 AM';
 	Var = '|| Somawara';
 	break;
-
+ 
   }
 
   sunRise.innerHTML = sunr;
