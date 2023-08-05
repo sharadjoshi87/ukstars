@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        div.gallery {
+            border: 1px solid #ccc;
+        }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%; 
+            height: auto;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 24.99999%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%;
+            }
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+    <title>Galaxy of UK Stars!</title>
+</head>
+
+<body>
+
+    <h2>Mitansh Gallery</h2>
+
+    
+    <div class="responsive">
+        <div class="gallery">
+            <a target="_blank" href="https://drive.google.com/uc?export=view&id=17RQjq4pFtIsgzGFCpbrmsVBrWiVt91YS">
+                <img src="https://drive.google.com/uc?export=view&id=17RQjq4pFtIsgzGFCpbrmsVBrWiVt91YS" alt="Naveen Chandra Pandey with Kapil Dev" width="600" height="400">
+            </a>
+            <div class="desc">Mom's first look</div>
+        </div>
+    </div>
+    <!-- https://drive.google.com/uc?export=view&id=17RQjq4pFtIsgzGFCpbrmsVBrWiVt91YS -->
+    <!-- https://drive.google.com/file/d/1BTpQGMRRZZvisRorsTtfxZ5WrZQgpFAZ/view -->
+
+    <!-- <div class="responsive">
+        <div class="gallery">
+            <a target="_blank" href="/img/ncp-g5.jpg">
+                <img src="/img/ncp-g5.jpg" alt="Naveen Chandra Pandey with Shri Koshiyari ji Former Cheif Minister of UK" width="600" height="400">
+            </a>
+            <div class="desc"></div>
+        </div>
+    </div> -->
+
+
+
+</body>
+
+</html>
