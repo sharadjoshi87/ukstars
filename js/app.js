@@ -59,7 +59,25 @@ const content = {
                             <h3 class="text-xl font-bold text-center text-slate-800">Dr. K K Pandey</h3>
                             <p class="text-green-600 text-sm font-semibold text-center mb-4 italic">Senior Consultant (Pulmonology)</p>
                             <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                19 years of medical experience at Yashoda Super Speciality Hospital.
+                                
+                <strong>Native Place</strong> - Goodmangal, Uttarakhand, India <br>
+                <strong>Occupation</strong> - Sr. consultant - Respiratory, critical care & sleep medicines <br>
+                <strong>Industry</strong> - Heath and wellness
+              <br><br>
+              M.B.B.S, <br> MD (Pulmonary Medicine),<br> FCCP (USA) <br>
+                Formerly HOD, Max Hospital (vaishali) <br>
+                Dr. Kamal Kishore Pandey is a Pulmonologist in Kaushambi,
+                Ghaziabad and has an experience of 19 years in this field. <br>
+                Dr. Kamal Kishore Pandey practices at Yashoda Super Speciality Hospital in Kaushambi, Ghaziabad. <br>
+                He completed MBBS from University College of Medical Sciences & GTB Hospital, New Delhi in 1996
+                and MD - Pulmonary Medicine from Vallabhbhai Patel Chest Institute in 2000. <br>
+
+                He is a member of Life Member National College of Chest Physician (NCCP),Indian Chest Society,American
+                College of Chest Physicians and European Respiratory Society (ERS). <br> Some of the services provided
+                by the doctor
+                are: Pleurisy,Bronchial Asthma Treatment,Pneumonia Treatment,Thoracoscopy and Chronic Obstructive
+                Pulmonary
+                Disease (COPD) Treatment etc.
                             </p>
                         </div>
                     </div>
@@ -72,7 +90,69 @@ const content = {
                             <h3 class="text-xl font-bold text-center text-slate-800">Dr. Harish Pant</h3>
                             <p class="text-orange-600 text-sm font-semibold text-center mb-4 italic">Chief Business Transformation Officer</p>
                             <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                CBTO & Mentor of NTF Group. 35+ years in Automotive Industry and Strategic Business Management.
+                                <strong>Native Place</strong> - Kande, Uttarakhand,
+                                                        India <br>
+                                                        <strong>Occupation</strong> - Chief Business
+                                                        Transformation Officer, Thinker, Advisor,
+                                                        Mentor, Speaker, Author, Poet and Sustainability
+                                                        Exponent <br>
+                                                        <strong>Industry</strong> - NTF (India) Pvt. Ltd. ,
+                                                        Automotive <br><br>
+                            Transforming Future Mobility by
+                                                        connecting Customer
+                                                        Experiences, Concept Development,
+                                                        Style and Function, Innovations and Technology,
+                                                        Research, Design & Development,
+                                                        Operational Excellence, After Sales Services and Network
+                                                        convergence. Contributing
+                                                        towards Sustainability by usage of Engineering Plastics,
+                                                        Light Weight Materials and Polymers. <br>
+
+                                                        Active member of Digital Transformation Team set up by
+                                                        ACMA and SIAM. <br>
+
+                                                        Leading and developing NextGen Leadership,
+                                                        Entrepreneurs, Startups and Skills
+                                                        Development initiatives across international and
+                                                        national platforms through lectures,
+                                                        workshops, presentations and knowledge share to the
+                                                        students and faculty of top management
+                                                        institutions, engineering colleges, international
+                                                        schools and labs. <br>
+
+                                                        A learner and enthusiast of Spirituality, Yoga, Quantum,
+                                                        Innovation, Blockchain, Crypto Currency and Fin-tech.
+                                                        <br>
+
+                                                        Developed a pathbreaking Sustainability and Three
+                                                        Currencies Models for Social, Environmental and Economic
+                                                        (SEE)
+                                                        Impacts. <br>
+
+                                                        Global experience of thirty-four years in across
+                                                        multi-sectors Aerospace, Automotive and Steel sectors.
+                                                        <br>
+                                                        Distinguished Alumnus and Fellow of Institution of
+                                                        Engineers (FIE), MIET, Chartered Engineer (India),
+                                                        Vice Chairman - IEI Alumni Association, Member of
+                                                        Aeronautical Society of India and SAE and many other
+                                                        chapters and associations. <br>
+                                                        Recipient of Outstanding Corporate Award - MTC Global,
+                                                        ET Polymer Award for Innovation,
+                                                        The Machinist Machi Trophy for Safety, Immai Operational
+                                                        Excellence Award, Mother Teresa
+                                                        Excellence Award, Personality of the Year, Award for
+                                                        Industrial Development and many others. <br>
+                                                        Corporate Member - Confederation of Indian Industries,
+                                                        APAC Advisory Board and Global Mentor -
+                                                        ISCEA, Vice Chairman - Indian Value Engineering Society,
+                                                        Treasury Elite, IFA Global, Gerson
+                                                        Lehrman Group USA, Society of Indian Aerospace
+                                                        Technologies, UK Trade and Investment and various
+                                                        others. <br>
+
+                                                        Advisor and Mentor of 100 Open Startups, SME One Source
+                                                        Make in India foundation, ISCEA, INY and others.
                             </p>
                         </div>
                     </div>
@@ -368,7 +448,7 @@ const content = {
         </div>
     `,
   },
-"/posts": {
+  "/posts": {
     title: "Community Posts",
     html: `
         <section class="px-4 py-8 max-w-6xl mx-auto">
@@ -381,22 +461,76 @@ const content = {
             <!-- Video Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 ${[
-                    { id: 'KYQqE_VQvC4', title: 'हमारे देवभूमि उत्तराखंड के नैनीताल के डालकन्या ग्राम सभा का अद्भुत नजारा जय जन्म भूमि' }, // Replace with your actual Video IDs
-                    { id: 'y_OJGTG1a8k', title: 'हाय रे करोना' },
-                    { id: 'mydNaQHxMuo', title: '#कुमोनी कविता नानतिनाओं' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                    { id: 'otCmwt7L8yI', title: 'Brain drain or inefficient entrepreneur environment' },
-                ].map(video => `
+                  {
+                    id: "KYQqE_VQvC4",
+                    title:
+                      "हमारे देवभूमि उत्तराखंड के नैनीताल के डालकन्या ग्राम सभा का अद्भुत नजारा जय जन्म भूमि",
+                  }, // Replace with your actual Video IDs
+                  { id: "y_OJGTG1a8k", title: "हाय रे करोना" },
+                  { id: "mydNaQHxMuo", title: "#कुमोनी कविता नानतिनाओं" },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                  {
+                    id: "otCmwt7L8yI",
+                    title:
+                      "Brain drain or inefficient entrepreneur environment",
+                  },
+                ]
+                  .map(
+                    (video) => `
                     <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300">
                         <!-- Responsive Video Container -->
                         <div class="relative w-full aspect-video bg-slate-200">
@@ -414,11 +548,13 @@ const content = {
                             <p class="text-slate-500 text-sm mt-1">Galaxy of UK Stars Official/Partner/Public Channel</p>
                         </div>
                     </div>
-                `).join('')}
+                `,
+                  )
+                  .join("")}
             </div>
         </section>
-    `
-},
+    `,
+  },
 };
 
 // Add this to the global scope in app.js
