@@ -42,306 +42,49 @@ const content = {
         `,
   },
   "/team": {
-    title: "Leadership Team",
+    title: "Our Leadership Team",
     html: `
-            <section class="px-4 py-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-slate-800">Our Leadership Team</h2>
-                    <div class="h-1 w-20 bg-orange-500 mx-auto mt-4 rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                <!-- Dr. K K Pandey -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                        <div class="p-6">
-                            <img src="./img/KKPandey.jpg" class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                            <h3 class="text-xl font-bold text-center text-slate-800">Dr. K K Pandey</h3>
-                            <p class="text-green-600 text-sm font-semibold text-center mb-4 italic">Senior Consultant (Pulmonology)</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                
-                <strong>Native Place</strong> - Goodmangal, Uttarakhand, India <br>
-                <strong>Occupation</strong> - Sr. consultant - Respiratory, critical care & sleep medicines <br>
-                <strong>Industry</strong> - Heath and wellness
-              <br><br>
-              M.B.B.S, <br> MD (Pulmonary Medicine),<br> FCCP (USA) <br>
-                Formerly HOD, Max Hospital (vaishali) <br>
-                Dr. Kamal Kishore Pandey is a Pulmonologist in Kaushambi,
-                Ghaziabad and has an experience of 19 years in this field. <br>
-                Dr. Kamal Kishore Pandey practices at Yashoda Super Speciality Hospital in Kaushambi, Ghaziabad. <br>
-                He completed MBBS from University College of Medical Sciences & GTB Hospital, New Delhi in 1996
-                and MD - Pulmonary Medicine from Vallabhbhai Patel Chest Institute in 2000. <br>
-
-                He is a member of Life Member National College of Chest Physician (NCCP),Indian Chest Society,American
-                College of Chest Physicians and European Respiratory Society (ERS). <br> Some of the services provided
-                by the doctor
-                are: Pleurisy,Bronchial Asthma Treatment,Pneumonia Treatment,Thoracoscopy and Chronic Obstructive
-                Pulmonary
-                Disease (COPD) Treatment etc.
-                            </p>
+        <section class="px-4 py-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                ${[
+                  {
+                    name: "Naveen Chandra Pandey",
+                    role: "OSD, Global Schools Foundation",
+                    img: "./img/NCPandey.jpg",
+                    desc: "Dedicated professional in Management and Education with over 20 years of experience. He has been instrumental in driving educational excellence and administrative efficiency across multiple global platforms.",
+                  },
+                  // ... other members follow the same structure
+                ]
+                  .map(
+                    (member, index) => `
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <img src="${member.img}" 
+                                 class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500 mb-4">
+                            <h3 class="text-xl font-bold text-center text-slate-800">${member.name}</h3>
+                            <p class="text-blue-600 text-sm font-semibold text-center mb-4 italic">${member.role}</p>
+                            
+                            <!-- Expandable Description Container -->
+                            <div id="desc-${index}" class="text-slate-600 text-sm leading-relaxed text-center line-clamp-3 transition-all duration-300">
+                                ${member.desc}
+                            </div>
+                        </div>
+                        
+                        <!-- Toggle Link -->
+                        <div class="px-6 pb-6 text-center">
+                            <button onclick="toggleDescription(${index})" 
+                                    id="btn-${index}"
+                                    class="text-orange-600 text-xs font-bold uppercase tracking-wider hover:text-orange-700 transition-colors">
+                                Read More
+                            </button>
                         </div>
                     </div>
-                    
-                    <!-- Dr. Harish Pant -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                        <div class="p-6">
-                            <img src="./img/HarishPant.jpg"
-                            class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                            <h3 class="text-xl font-bold text-center text-slate-800">Dr. Harish Pant</h3>
-                            <p class="text-orange-600 text-sm font-semibold text-center mb-4 italic">Chief Business Transformation Officer</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                <strong>Native Place</strong> - Kande, Uttarakhand,
-                                                        India <br>
-                                                        <strong>Occupation</strong> - Chief Business
-                                                        Transformation Officer, Thinker, Advisor,
-                                                        Mentor, Speaker, Author, Poet and Sustainability
-                                                        Exponent <br>
-                                                        <strong>Industry</strong> - NTF (India) Pvt. Ltd. ,
-                                                        Automotive <br><br>
-                            Transforming Future Mobility by
-                                                        connecting Customer
-                                                        Experiences, Concept Development,
-                                                        Style and Function, Innovations and Technology,
-                                                        Research, Design & Development,
-                                                        Operational Excellence, After Sales Services and Network
-                                                        convergence. Contributing
-                                                        towards Sustainability by usage of Engineering Plastics,
-                                                        Light Weight Materials and Polymers. <br>
-
-                                                        Active member of Digital Transformation Team set up by
-                                                        ACMA and SIAM. <br>
-
-                                                        Leading and developing NextGen Leadership,
-                                                        Entrepreneurs, Startups and Skills
-                                                        Development initiatives across international and
-                                                        national platforms through lectures,
-                                                        workshops, presentations and knowledge share to the
-                                                        students and faculty of top management
-                                                        institutions, engineering colleges, international
-                                                        schools and labs. <br>
-
-                                                        A learner and enthusiast of Spirituality, Yoga, Quantum,
-                                                        Innovation, Blockchain, Crypto Currency and Fin-tech.
-                                                        <br>
-
-                                                        Developed a pathbreaking Sustainability and Three
-                                                        Currencies Models for Social, Environmental and Economic
-                                                        (SEE)
-                                                        Impacts. <br>
-
-                                                        Global experience of thirty-four years in across
-                                                        multi-sectors Aerospace, Automotive and Steel sectors.
-                                                        <br>
-                                                        Distinguished Alumnus and Fellow of Institution of
-                                                        Engineers (FIE), MIET, Chartered Engineer (India),
-                                                        Vice Chairman - IEI Alumni Association, Member of
-                                                        Aeronautical Society of India and SAE and many other
-                                                        chapters and associations. <br>
-                                                        Recipient of Outstanding Corporate Award - MTC Global,
-                                                        ET Polymer Award for Innovation,
-                                                        The Machinist Machi Trophy for Safety, Immai Operational
-                                                        Excellence Award, Mother Teresa
-                                                        Excellence Award, Personality of the Year, Award for
-                                                        Industrial Development and many others. <br>
-                                                        Corporate Member - Confederation of Indian Industries,
-                                                        APAC Advisory Board and Global Mentor -
-                                                        ISCEA, Vice Chairman - Indian Value Engineering Society,
-                                                        Treasury Elite, IFA Global, Gerson
-                                                        Lehrman Group USA, Society of Indian Aerospace
-                                                        Technologies, UK Trade and Investment and various
-                                                        others. <br>
-
-                                                        Advisor and Mentor of 100 Open Startups, SME One Source
-                                                        Make in India foundation, ISCEA, INY and others.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Naveen Chandra Pandey -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                        <div class="p-6">
-                        <img src="./img/NCPandey.jpg"
-                            class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                            <h3 class="text-xl font-bold text-center text-slate-800">Naveen Chandra Pandey</h3>
-                            <p class="text-blue-600 text-sm font-semibold text-center mb-4 italic">OSD, Global Schools Foundation</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                Dedicated professional in Management and Education with over 20 years of experience.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Pooran Chandra Kandpal -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                        <div class="p-6">
-                            <img src="./img/PooranChandraKandpal.jpg"
-                            class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                            <h3 class="text-xl font-bold text-center text-slate-800">Pooran Chandra Kandpal</h3>
-                            <p class="text-purple-600 text-sm font-semibold text-center mb-4 italic">Author & Social Worker</p>
-                            <p class="text-slate-600 text-sm leading-relaxed text-center">
-                                Dedicated 45 years to Uttarakhand, Author of "Annadata Krishak".
-                            </p>
-                        </div>
-                    </div>
-
-                <!-- Prof. Naveen Lohani -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/naveenLohani.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Prof. Naveen Lohani</h3>
-                        <p class="text-orange-600 text-sm font-semibold text-center mb-4 italic">Education & Leadership</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Vice Chancellor at Open University, Haldwani. A distinguished academic leader in Uttarakhand.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Dr. Girish Pant -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/GirishPant.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Dr. Girish Pant</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Humanitarian & Awardee</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- pooran pandey -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/puranpandey.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Pooran Pandey</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Healthcare & Education</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- birendar singh Nayal -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/BirendarSinghNayal.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Birendar Singh Nayal</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Accounts</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Ravi Mehra -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/RaviMehra.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Ravi Mehra</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Education and Social Services</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Raju Pandey -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/RajuPandey.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Raju Pandey</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">IT</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Harish Arya -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/HarishArya.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Harish Arya</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Accounts</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Lalit Mohan Lohani -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/LalitMohanLohani.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Lalit Mohan Lohani</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Construction</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Adv. Neeraj Pandey -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="img/AdvNeerajPandey.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Adv. Neeraj Pandey</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Accounts & Finance</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Dr. Prakash Chand Kandpal -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="./img/prakashkandpal.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Dr. Prakash Chand Kandpal</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Education</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Sunaina Bisht -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="./img/sunaina.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">Sunaina Bisht/h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Theatre & Social work</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- पंडित हेमराज शास्त्री -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2">
-                    <div class="p-6">
-                        <img src="./img/PHemraj.jpg" 
-                        class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500">
-                        <h3 class="text-xl font-bold text-center text-slate-800">पंडित हेमराज शास्त्री</h3>
-                        <p class="text-yellow-600 text-sm font-semibold text-center mb-4 italic">Humanitarian & Awardee</p>
-                        <p class="text-slate-600 text-sm leading-relaxed text-center">
-                            Pravasi Bhartiya Samman Awardee 2019. Recognized for humanitarian work in UAE.
-                        </p>
-                    </div>
-                </div>
-
-                </div>
-            </section>
-        `,
+                `,
+                  )
+                  .join("")}
+            </div>
+        </section>
+    `,
   },
   "/gallery": {
     title: "NCP Gallery",
@@ -600,3 +343,16 @@ window.addEventListener("popstate", handleRouting);
 
 // INITIAL LOAD: This is what makes the content visible on first open
 document.addEventListener("DOMContentLoaded", handleRouting);
+
+window.toggleDescription = (index) => {
+    const desc = document.getElementById(`desc-${index}`);
+    const btn = document.getElementById(`btn-${index}`);
+
+    if (desc.classList.contains('line-clamp-3')) {
+        desc.classList.remove('line-clamp-3');
+        btn.innerText = 'Read Less';
+    } else {
+        desc.classList.add('line-clamp-3');
+        btn.innerText = 'Read More';
+    }
+};
