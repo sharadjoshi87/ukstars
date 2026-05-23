@@ -8315,22 +8315,57 @@ const content = {
                   .map(
                     (video) => `
                     <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300">
-                        <!-- Responsive Video Container -->
-                        <div class="relative w-full aspect-video bg-slate-200">
-                            <iframe 
-                                class="absolute top-0 left-0 w-full h-full"
-                                src="https://www.youtube.com/embed/${video.id}" 
-                                title="${video.title}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-slate-800 text-lg">${video.title}</h3>
-                            <p class="text-slate-500 text-sm mt-1">Galaxy of UK Stars Official/Partner/Public Channel</p>
-                        </div>
-                    </div>
+    
+    <!-- Thumbnail Container -->
+    <div 
+        class="relative w-full aspect-video bg-black cursor-pointer youtube-player"
+        data-id="${video.id}"
+    >
+        <img 
+            src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg"
+            class="w-full h-full object-cover"
+            loading="lazy"
+        />
+
+        <!-- Play Button -->
+        <!-- Play Button Overlay -->
+<div class="absolute inset-0 flex items-center justify-center group">
+    
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition duration-300"></div>
+
+    <!-- Play Button -->
+    <div class="
+        relative
+        flex items-center justify-center
+        w-20 h-20
+        rounded-full
+        bg-red-600/90
+        backdrop-blur-md
+        shadow-2xl
+        transition-all duration-300
+        group-hover:scale-110
+        group-hover:bg-red-700
+    ">
+        <!-- Triangle -->
+        <div class="
+            ml-1
+            w-0 h-0
+            border-t-[12px] border-t-transparent
+            border-b-[12px] border-b-transparent
+            border-l-[20px] border-l-white
+        "></div>
+    </div>
+</div>
+    </div>
+
+    <div class="p-6">
+        <h3 class="font-bold text-slate-800 text-lg">${video.title}</h3>
+        <p class="text-slate-500 text-sm mt-1">
+            Galaxy of UK Stars Official/Partner/Public Channel
+        </p>
+    </div>
+</div>
                 `,
                   )
                   .join("")}
@@ -8378,6 +8413,41 @@ window.addEventListener("click", (e) => {
   }
 });
 
+// youtube video player 
+document.addEventListener("click", function (e) {
+    const player = e.target.closest(".youtube-player");
+
+    if (!player) return;
+
+    const videoId = player.dataset.id;
+
+    player.innerHTML = `
+        <iframe
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+        ></iframe>
+    `;
+});
+
+// const videosPerPage = 20;
+// let visible = 20;
+
+// function renderVideos() {
+//     const sliced = videos.slice(0, visible);
+
+//     document.getElementById("videos").innerHTML =
+//         sliced.map(video => `...`).join("");
+// }
+
+// document.getElementById("loadMore").addEventListener("click", () => {
+//     visible += 20;
+//     renderVideos();
+// });
+
+// renderVideos();
 // Handle browser navigation (Back/Forward)
 window.addEventListener("popstate", handleRouting);
 
