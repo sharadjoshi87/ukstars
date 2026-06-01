@@ -51,7 +51,7 @@ const content = {
                     name: "Naveen Chandra Pandey",
                     role: "OSD, Global Schools Foundation",
                     img: "./img/NCPandey.jpg",
-                    desc: "Dedicated professional in Management and Education with over 20 years of experience. He has been instrumental in driving educational excellence and administrative efficiency across multiple global platforms.",
+                    desc: `He has over 20 years of diversified experience in the field of education. During his tenure, Mr. Pandey worked with Maharishi Vidya Mandir, Maharishi Institute of Management and Maharishi University of Management and Technology. Besides having a long-working experience in the education sector, Mr. Pandey also had the opportunity to have his hands in the legal and sales and marketing sectors as well. He worked with the Legal Department in the office of Hon’ble Dr. L.M. Singhvi, Senior Advocate Supreme Court of India and associated with the Sales & Marketing (Reliance and Karvy Insurance Broking Channel Partner for Tata AIG).<br><br>During his wide experience while working as Principal Private Secretary to Hon’ble Dr. L.M Singhvi, Mr. Pandey had an opportunity to closely observe and gain through his style of functioning in the Parliament of India as Member of Parliament Rajya Sabha (1998-2004) and with IGNCA Trust, Ministry of Culture, Govt of India as Private Secretary to President. He has rich experience of organizing International level corporate conferences, press meets and had made overseas visits to Turkey, Singapore, Dubai, Abu Dhabi, Macau and Hong Kong. Mr. Pandey holds Diploma in Modern Office Practice from Bhai Parmanand Institute of Business Studies (Delhi); a Bachelor of Commerce from Delhi University and MBA (Marketing) from The Institute of Advanced Studies in Education (IASE) Gandhi Vidya Mandir, Sardar Sahar, Rajasthan.<br><br>Mr. Pandey has been associated with the Global Schools Foundation since its establishment in 2002 as an onlooker when its Chairman & Co-Founder, Mr. Atul Temurnikar and Dr. L.M. Singhvi were contemplating a suitable name for the organization and actively joined the group in April 2010. He is settlor of Trusts called One Universe Educational Trust, Karnataka; Mother Earth Educational Trust, Madhya Pradesh; Green Earth Education Trust, Maharashtra; Holistic Education Trust, Maharashtra; Creative Education Trust, Maharashtra; Prodigy Development Trust, Noida; Talent Education Trust; Innovative Education Trust. He is also Vice Chairman of NGO called The Center for Indian Science and Philosophy.`,
                   },
                   // ... other members follow the same structure
                 ]
@@ -65,7 +65,7 @@ const content = {
                             <p class="text-blue-600 text-sm font-semibold text-center mb-4 italic">${member.role}</p>
                             
                             <!-- Expandable Description Container -->
-                            <div id="desc-${index}" class="text-slate-600 text-sm leading-relaxed text-center line-clamp-3 transition-all duration-300">
+                            <div id="desc-${index}" class="text-slate-600 text-sm leading-relaxed text-center line-clamp-5 transition-all duration-300">
                                 ${member.desc}
                             </div>
                         </div>
@@ -89,14 +89,14 @@ const content = {
   "/gallery": {
     title: "NCP Gallery",
     html: `
-        <section class="px-4 py-8 max-w-6xl mx-auto">
+        <section class="px-4 py-8 max-w-4xl mx-auto">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 tracking-tight">NCP Gallery</h2>
                 <div class="h-1 w-16 bg-orange-500 mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <!-- Modern Masonry Grid -->
-            <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            <!-- Controlled Grid: 1 col on mobile, exactly 2 cols on tablet/desktop -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 ${[
                   "img/N1.png",
                   "img/N2.png",
@@ -172,12 +172,15 @@ const content = {
                 ]
                   .map(
                     (src) => `
-                    <div class="break-inside-avoid overflow-hidden rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-shadow duration-300">
-                        <img src="${src}" 
-                             alt="Gallery Image" 
-                             class="w-full h-auto block cursor-pointer hover:scale-105 transition-transform duration-500"
-                             onerror="this.parentElement.style.display='none'"
-                             onclick="openLightbox(this.src)">
+                    <div class="overflow-hidden rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-shadow duration-300 bg-slate-50">
+                        <!-- aspect-video or aspect-[4/3] forces a uniform medium image size -->
+                        <div class="relative w-full aspect-[4/3] overflow-hidden">
+                            <img src="${src}" 
+                                 alt="Gallery Image" 
+                                 class="absolute inset-0 w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500"
+                                 onerror="this.closest('.overflow-hidden').style.display='none'"
+                                 onclick="openLightbox(this.src)">
+                        </div>
                     </div>
                 `,
                   )
@@ -194,7 +197,7 @@ const content = {
   "/posts": {
     title: "Community Posts",
     html: `
-        <section class="px-4 py-8 max-w-6xl mx-auto">
+        <section class="px-4 py-8 max-w-4xl mx-auto">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Community Videos</h2>
                 <p class="text-slate-500 mt-2">Latest updates and event highlights from our YouTube channel.</p>
@@ -8413,15 +8416,15 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// youtube video player 
+// youtube video player
 document.addEventListener("click", function (e) {
-    const player = e.target.closest(".youtube-player");
+  const player = e.target.closest(".youtube-player");
 
-    if (!player) return;
+  if (!player) return;
 
-    const videoId = player.dataset.id;
+  const videoId = player.dataset.id;
 
-    player.innerHTML = `
+  player.innerHTML = `
         <iframe
             class="absolute top-0 left-0 w-full h-full"
             src="https://www.youtube.com/embed/${videoId}?autoplay=1"
@@ -8458,11 +8461,11 @@ window.toggleDescription = (index) => {
   const desc = document.getElementById(`desc-${index}`);
   const btn = document.getElementById(`btn-${index}`);
 
-  if (desc.classList.contains("line-clamp-3")) {
-    desc.classList.remove("line-clamp-3");
+  if (desc.classList.contains("line-clamp-5")) {
+    desc.classList.remove("line-clamp-5");
     btn.innerText = "Read Less";
   } else {
-    desc.classList.add("line-clamp-3");
+    desc.classList.add("line-clamp-5");
     btn.innerText = "Read More";
   }
 };
