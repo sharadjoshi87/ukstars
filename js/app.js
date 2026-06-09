@@ -52,34 +52,58 @@ const content = {
                     role: "OSD, Global Schools Foundation",
                     img: "./img/NCPandey.jpg",
                     desc: `He has over 20 years of diversified experience in the field of education. During his tenure, Mr. Pandey worked with Maharishi Vidya Mandir, Maharishi Institute of Management and Maharishi University of Management and Technology. Besides having a long-working experience in the education sector, Mr. Pandey also had the opportunity to have his hands in the legal and sales and marketing sectors as well. He worked with the Legal Department in the office of Hon’ble Dr. L.M. Singhvi, Senior Advocate Supreme Court of India and associated with the Sales & Marketing (Reliance and Karvy Insurance Broking Channel Partner for Tata AIG).<br><br>During his wide experience while working as Principal Private Secretary to Hon’ble Dr. L.M Singhvi, Mr. Pandey had an opportunity to closely observe and gain through his style of functioning in the Parliament of India as Member of Parliament Rajya Sabha (1998-2004) and with IGNCA Trust, Ministry of Culture, Govt of India as Private Secretary to President. He has rich experience of organizing International level corporate conferences, press meets and had made overseas visits to Turkey, Singapore, Dubai, Abu Dhabi, Macau and Hong Kong. Mr. Pandey holds Diploma in Modern Office Practice from Bhai Parmanand Institute of Business Studies (Delhi); a Bachelor of Commerce from Delhi University and MBA (Marketing) from The Institute of Advanced Studies in Education (IASE) Gandhi Vidya Mandir, Sardar Sahar, Rajasthan.<br><br>Mr. Pandey has been associated with the Global Schools Foundation since its establishment in 2002 as an onlooker when its Chairman & Co-Founder, Mr. Atul Temurnikar and Dr. L.M. Singhvi were contemplating a suitable name for the organization and actively joined the group in April 2010. He is settlor of Trusts called One Universe Educational Trust, Karnataka; Mother Earth Educational Trust, Madhya Pradesh; Green Earth Education Trust, Maharashtra; Holistic Education Trust, Maharashtra; Creative Education Trust, Maharashtra; Prodigy Development Trust, Noida; Talent Education Trust; Innovative Education Trust. He is also Vice Chairman of NGO called The Center for Indian Science and Philosophy.`,
+                    native: "Goodmangal, Uttarakhand, India",
+                    occupation:
+                      "Officer on Special Duty (OSD) & Senior Manager School Administration",
+                    industry:
+                      "Global Indian School Education Services Pvt Ltd, Education",
                   },
                   // ... other members follow the same structure
                 ]
                   .map(
                     (member, index) => `
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transition-all hover:-translate-y-2 flex flex-col">
-                        <div class="p-6 flex-grow">
-                            <img src="${member.img}" 
-                                 class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500 mb-4">
-                            <h3 class="text-xl font-bold text-center text-slate-800">${member.name}</h3>
-                            <p class="text-blue-600 text-sm font-semibold text-center mb-4 italic">${member.role}</p>
-                            
-                            <!-- Expandable Description Container -->
-                            <div id="desc-${index}" class="text-slate-600 text-sm leading-relaxed text-center line-clamp-5 transition-all duration-300">
-                                ${member.desc}
-                            </div>
-                        </div>
-                        
-                        <!-- Toggle Link -->
-                        <div class="px-6 pb-6 text-center">
-                            <button onclick="toggleDescription(${index})" 
-                                    id="btn-${index}"
-                                    class="text-orange-600 text-xs font-bold uppercase tracking-wider hover:text-orange-700 transition-colors">
-                                Read More
-                            </button>
-                        </div>
-                    </div>
-                `,
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 transition-all hover:-translate-y-2 flex flex-col relative group/card isolate">
+        
+        <div class="absolute top-4 right-4 z-30 group/info cursor-pointer">
+            <svg class="w-5 h-5 text-slate-400 hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+
+            <div class="absolute right-0 top-7 w-72 bg-slate-900 text-white text-xs rounded-xl p-4 shadow-xl opacity-0 pointer-events-none group-hover/info:opacity-100 group-hover/info:pointer-events-auto transition-opacity duration-300 z-50 text-left border border-slate-800">
+                <p class="mb-2">
+                    <strong class="text-orange-400 block mb-0.5">Native Place:</strong> 
+                    <span class="text-slate-300">${member.native}</span>
+                </p>
+                <p class="mb-2">
+                    <strong class="text-orange-400 block mb-0.5">Occupation:</strong> 
+                    <span class="text-slate-300">${member.occupation}</span>
+                </p>
+                <p>
+                    <strong class="text-orange-400 block mb-0.5">Industry:</strong> 
+                    <span class="text-slate-300">${member.industry}</span>
+                </p>
+                
+                <div class="absolute right-1.5 top-[-4px] w-2 h-2 bg-slate-900 rotate-45 border-t border-l border-slate-800"></div>
+            </div>
+        </div>
+
+        <div class="p-6 flex-grow">
+            <img src="${member.img}" class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-orange-500 mb-4">
+            <h3 class="text-xl font-bold text-center text-slate-800">${member.name}</h3>
+            <p class="text-blue-600 text-sm font-semibold text-center mb-4 italic">${member.role}</p>
+            
+            <div id="desc-${index}" class="text-slate-600 text-sm leading-relaxed text-center line-clamp-5 transition-all duration-300">
+                ${member.desc}
+            </div>
+        </div>
+        
+        <div class="px-6 pb-6 text-center">
+            <button onclick="toggleDescription(${index})" id="btn-${index}" class="text-orange-600 text-xs font-bold uppercase tracking-wider hover:text-orange-700 transition-colors">
+                Read More
+            </button>
+        </div>
+    </div>
+`,
                   )
                   .join("")}
             </div>
