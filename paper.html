@@ -836,6 +836,19 @@
               return timeStr;
             }
 
+            // Helper to safely parse numbers or display a placeholder
+            const exitPrice =
+              t.sellPrice !== "" &&
+              t.sellPrice !== null &&
+              t.sellPrice !== undefined &&
+              !isNaN(t.sellPrice)
+                ? Number(t.sellPrice).toLocaleString("en-IN")
+                : t.exitPrice !== "" &&
+                    t.exitPrice !== null &&
+                    !isNaN(t.exitPrice)
+                  ? Number(t.exitPrice).toLocaleString("en-IN")
+                  : "N/A";
+
             const card = document.createElement("div");
             card.className =
               "bg-gray-800 p-3 rounded-lg border-l-4 border-amber-400 border-y border-r border-gray-700 space-y-2";
@@ -922,7 +935,7 @@ ${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ $
                 📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
               </div>
               <div class="text-[11px] text-gray-400 mt-0.5">
-                Buy: ₹${t.buyPrice} | Exit: ₹${t.sellPrice} | Qty: ${t.quantity}
+                Buy: ₹${t.buyPrice} | Exit: ₹${t.exitPrice} | Qty: ${t.quantity}
               </div>
             </div>
             <div class="text-right flex items-center gap-2">
