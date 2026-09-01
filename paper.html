@@ -893,8 +893,7 @@
                 <div class="flex items-center gap-1 text-[9px]">
                   <span class="inline-block w-1.5 h-1.5 rounded-full ${t.lastUpdatedSource === "LIVE" ? "bg-emerald-400 animate-pulse" : t.lastUpdatedSource === "MANUAL" ? "bg-amber-400" : "bg-gray-500"}"></span>
                   <span class="text-gray-400 font-mono">
-                    // Replace t.lastUpdatedTime with formatTimeOnly(t.lastUpdatedTime)
-${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ ${formatTimeOnly(t.lastUpdatedTime)}` : "Not set"}
+                    ${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ ${formatTimeOnly(t.lastUpdatedTime)}` : "Not set"}
                   </span>
                 </div>
               </div>
@@ -935,7 +934,7 @@ ${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ $
                 📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
               </div>
               <div class="text-[11px] text-gray-400 mt-0.5">
-                Buy: ₹${t.buyPrice} | Exit: ₹${t.exitPrice} | Qty: ${t.quantity}
+                Buy: ₹${t.buyPrice} | Exit: ₹${getExitPrice(t)} | Qty: ${t.quantity}
               </div>
             </div>
             <div class="text-right flex items-center gap-2">
@@ -953,6 +952,21 @@ ${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ $
             closedTradeList.appendChild(card);
           });
         }
+      }
+
+      // Add this helper function inside paper.html script
+      function getExitPrice(trade) {
+        // Check all possible property name variations sent from Google Sheets
+        const val =
+          trade.sellPrice ??
+          trade.exitPrice ??
+          trade["sellPrice"] ??
+          trade["exitPrice"];
+
+        if (val !== undefined && val !== null && val !== "" && !isNaN(val)) {
+          return Number(val).toLocaleString("en-IN");
+        }
+        return "N/A";
       }
 
       // Modal Controls
