@@ -956,16 +956,36 @@
 
       // Add this helper function inside paper.html script
       function getExitPrice(trade) {
-        // Check all possible property name variations sent from Google Sheets
-        const val =
+        if (!trade || typeof trade !== "object") return "N/A";
+
+        // 1. Check direct properties
+        let val =
           trade.sellPrice ??
           trade.exitPrice ??
-          trade["sellPrice"] ??
-          trade["exitPrice"];
+          trade.sellprice ??
+          trade.exitprice;
 
-        if (val !== undefined && val !== null && val !== "" && !isNaN(val)) {
-          return Number(val).toLocaleString("en-IN");
+        // 2. Case-insensitive key lookup (handles trailing spaces/different casing from Google Sheets)
+        if (val === undefined || val === null || val === "") {
+          const keys = Object.keys(trade);
+          const matchedKey = keys.find((k) => {
+            const cleanKey = k.trim().toLowerCase();
+            return cleanKey === "sellprice" || cleanKey === "exitprice";
+          });
+
+          if (matchedKey) {
+            val = trade[matchedKey];
+          }
         }
+
+        // 3. Parse and format numeric values
+        if (val !== undefined && val !== null && val !== "") {
+          const num = Number(val);
+          if (!isNaN(num) && num !== 0) {
+            return num.toLocaleString("en-IN");
+          }
+        }
+
         return "N/A";
       }
 
