@@ -1,1078 +1,760 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paper Trade Journal (Google Sheets Sync)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body
-    class="bg-gray-900 text-gray-100 min-h-screen p-4 font-sans max-w-md mx-auto relative"
-  >
-    <header class="mb-4 text-center">
-      <div class="flex justify-between items-center mb-1">
-        <span
-          class="text-[10px] bg-emerald-900/40 text-emerald-400 px-2 py-0.5 rounded border border-emerald-700/50"
-          >Google Sheets Sync</span
-        >
-        <div class="flex items-center gap-1.5">
-          <button
-            onclick="loadTradesFromSheet()"
-            class="text-xs text-gray-300 hover:text-white flex items-center gap-1 bg-gray-800 px-2 py-1 rounded border border-gray-700 hover:border-emerald-500 transition"
-            title="Refresh Sheet Data"
-          >
-            🔄 Refresh
-          </button>
-          <button
-            id="openDashboardBtn"
-            class="text-xs text-gray-300 hover:text-white flex items-center gap-1 bg-gray-800 px-2.5 py-1 rounded border border-gray-700 hover:border-emerald-500 transition"
-          >
-            📊 Analytics
-          </button>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Trading Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans p-4">
+
+  <div class="max-w-4xl mx-auto space-y-4">
+    
+    <!-- Top Bar / Metrics -->
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-3 flex justify-between items-center shadow-md">
+      <div>
+        <h1 class="text-sm font-bold text-gray-100">Paper Trading Journal</h1>
+        <p class="text-[10px] text-gray-400">Track and manage trade positions</p>
       </div>
-      <h1 class="text-2xl font-bold text-emerald-400">
-        📈 Paper Trade Journal
-      </h1>
-      <p class="text-xs text-gray-400 mt-0.5">
-        Track open positions & closed trades
-      </p>
-    </header>
-
-    <section class="grid grid-cols-3 gap-2 mb-4">
-      <div
-        class="bg-gray-800 p-2.5 rounded-lg text-center border border-gray-700"
-      >
-        <span class="text-[11px] text-gray-400 block">Realized P&L</span>
-        <span id="totalPl" class="text-xs font-bold text-gray-200">₹0</span>
-      </div>
-      <div
-        class="bg-gray-800 p-2.5 rounded-lg text-center border border-gray-700"
-      >
-        <span class="text-[11px] text-gray-400 block">Win Rate</span>
-        <span id="winRate" class="text-xs font-bold text-emerald-400">0%</span>
-      </div>
-      <div
-        class="bg-gray-800 p-2.5 rounded-lg text-center border border-gray-700"
-      >
-        <span class="text-[11px] text-gray-400 block">Active Trades</span>
-        <span id="activeCount" class="text-xs font-bold text-amber-400">0</span>
-      </div>
-    </section>
-
-    <!-- Global Search Field -->
-    <section class="mb-5">
-      <div class="relative">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="🔍 Search stock ticker or setup..."
-          class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 pl-3 text-xs text-white focus:outline-none focus:border-emerald-500"
-        />
-      </div>
-    </section>
-
-    <section class="bg-gray-800 p-4 rounded-xl border border-gray-700 mb-6">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-sm font-semibold text-gray-200">Log New Entry</h2>
-        <span
-          id="rrPreview"
-          class="text-[10px] bg-gray-900 border border-gray-700 px-2 py-0.5 rounded text-gray-400"
-        >
-          R:R Ratio: <strong class="text-amber-400" id="rrValue">--</strong>
-        </span>
-      </div>
-
-      <form id="tradeForm" class="space-y-3">
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Stock Ticker</label>
-            <input
-              type="text"
-              id="symbol"
-              placeholder="e.g. RELIANCE"
-              required
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500 uppercase"
-            />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Buy Date</label>
-            <input
-              type="date"
-              id="entryDate"
-              required
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1"
-              >Buy Price (₹)</label
-            >
-            <input
-              type="number"
-              step="0.05"
-              id="buyPrice"
-              placeholder="472.00"
-              required
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Quantity</label>
-            <input
-              type="number"
-              id="quantity"
-              placeholder="100"
-              required
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1"
-              >Target
-              <span class="text-emerald-400 text-[10px]">(%)</span></label
-            >
-            <input
-              type="number"
-              step="0.1"
-              id="targetPct"
-              placeholder="e.g. 5"
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1"
-              >Stop Loss
-              <span class="text-red-400 text-[10px]">(%)</span></label
-            >
-            <input
-              type="number"
-              step="0.1"
-              id="stopLossPct"
-              placeholder="e.g. 2"
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-        </div>
-
+      <div class="flex items-center gap-4 text-right">
         <div>
-          <label class="block text-xs text-gray-400 mb-1">Setup / Reason</label>
-          <select
-            id="setup"
-            required
-            class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-          >
-            <option value="" disabled selected>Select a setup</option>
+          <span class="text-[10px] text-gray-400 block">Active Trades</span>
+          <span id="activeCount" class="text-xs font-bold text-amber-400">0</span>
+        </div>
+        <div>
+          <span class="text-[10px] text-gray-400 block">Win Rate</span>
+          <span id="winRate" class="text-xs font-bold text-emerald-400">0%</span>
+        </div>
+        <div>
+          <span class="text-[10px] text-gray-400 block">Total Realized P&L</span>
+          <span id="totalPl" class="text-xs font-bold text-gray-200">₹0</span>
+        </div>
+        <button id="openDashboardBtn" class="bg-gray-700 hover:bg-gray-600 text-xs text-gray-200 px-2.5 py-1 rounded border border-gray-600">Analytics</button>
+      </div>
+    </div>
+
+    <!-- Trade Entry Form -->
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-3 shadow-md">
+      <h2 class="text-xs font-semibold text-gray-300 mb-2">Open New Position</h2>
+      <form id="tradeForm" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
+        <div>
+          <label class="text-[10px] text-gray-400 block">Date</label>
+          <input type="date" id="entryDate" required class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="text-[10px] text-gray-400 block">Symbol</label>
+          <input type="text" id="symbol" placeholder="e.g. RELIANCE" required class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500 uppercase">
+        </div>
+        <div>
+          <label class="text-[10px] text-gray-400 block">Buy Price (₹)</label>
+          <input type="number" step="0.05" id="buyPrice" required class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="text-[10px] text-gray-400 block">Quantity</label>
+          <input type="number" id="quantity" required class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="text-[10px] text-gray-400 block">Target (%)</label>
+          <input type="number" step="0.1" id="targetPct" placeholder="5" class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="text-[10px] text-gray-400 block">Stop Loss (%)</label>
+          <input type="number" step="0.1" id="stopLossPct" placeholder="2" class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div class="col-span-2 sm:col-span-4 md:col-span-4">
+          <label class="text-[10px] text-gray-400 block">Setup / Strategy</label>
+          <select id="setup" class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <option value="">Select Strategy...</option>
             <option value="DARVAS BOX">DARVAS BOX</option>
             <option value="SUPER BREAKOUT">SUPER BREAKOUT</option>
             <option value="RSI CROSSES BELOW 30">RSI CROSSES BELOW 30</option>
-            <option value="RSI 14 CROSSES ABOVE SMA RSI 20">
-              RSI 14 CROSSES ABOVE SMA RSI 20
-            </option>
-            <option value="EMA14 CROSS SMA44 COMBINED RSI VOLUME">
-              EMA14 CROSS SMA44 COMBINED RSI VOLUME
-            </option>
+            <option value="RSI 14 CROSSES ABOVE SMA RSI 20">RSI 14 CROSSES ABOVE SMA RSI 20</option>
+            <option value="EMA14 CROSS SMA44 COMBINED RSI VOLUME">EMA14 CROSS SMA44 COMBINED RSI VOLUME</option>
           </select>
         </div>
-
-        <button
-          type="submit"
-          id="submitBtn"
-          class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg text-xs transition"
-        >
-          Open Position
-        </button>
+        <div class="col-span-2 sm:col-span-4 md:col-span-2 flex items-end justify-between gap-2">
+          <div class="text-[10px] text-gray-400">
+            Preview R:R: <span id="rrValue" class="text-amber-400 font-bold">--</span>
+          </div>
+          <button type="submit" id="submitBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-1.5 rounded transition">Open Position</button>
+        </div>
       </form>
-    </section>
+    </div>
 
-    <section class="mb-6">
-      <div class="flex justify-between items-center mb-2 flex-wrap gap-1">
-        <h2
-          class="text-sm font-semibold text-amber-400 flex items-center gap-1.5"
-        >
-          <span>⏳ Open Positions</span>
-        </h2>
-        <div class="flex items-center gap-1.5">
-          <button
-            id="autoRefreshBtn"
-            onclick="toggleAutoRefresh()"
-            class="text-[10px] bg-gray-800 text-gray-400 border border-gray-700 hover:text-white px-2 py-0.5 rounded transition"
-          >
-            ⏱️ Auto: OFF
-          </button>
-          <button
-            id="fetchCmpBtn"
-            onclick="fetchAllCmps()"
-            class="text-[10px] bg-blue-600/30 text-blue-300 border border-blue-500/50 hover:bg-blue-600/50 px-2 py-0.5 rounded transition"
-          >
-            🔄 Fetch Live Prices
-          </button>
-        </div>
+    <!-- Controls & Search -->
+    <div class="flex justify-between items-center gap-2">
+      <input type="text" id="searchInput" placeholder="Search symbol or setup..." class="bg-gray-800 border border-gray-700 rounded px-3 py-1 text-xs text-white w-64 focus:outline-none focus:border-emerald-500">
+      <div class="flex items-center gap-2">
+        <button id="autoRefreshBtn" onclick="toggleAutoRefresh()" class="text-[10px] bg-gray-800 text-gray-400 border border-gray-700 hover:text-white px-2 py-1 rounded transition">⏱️ Auto: OFF</button>
+        <button id="fetchCmpBtn" onclick="fetchAllCmps()" class="text-xs bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-200 px-3 py-1 rounded transition">🔄 Fetch Live Prices</button>
       </div>
-      <div id="openTradeList" class="space-y-2"></div>
-    </section>
+    </div>
 
-    <section class="mb-8">
-      <div class="flex justify-between items-center mb-2">
-        <h2 class="text-sm font-semibold text-gray-200">Closed History</h2>
+    <!-- Active Positions -->
+    <div class="space-y-2">
+      <h2 class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Open Positions</h2>
+      <div id="openTradeList" class="space-y-2">
+        <p class="text-center text-[11px] text-gray-400 py-2">Loading trades from Google Sheet...</p>
       </div>
+    </div>
+
+    <!-- Closed Positions -->
+    <div class="space-y-2 pt-4">
+      <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Closed History</h2>
       <div id="closedTradeList" class="space-y-2"></div>
-    </section>
-
-    <!-- Performance Analytics Dashboard Modal -->
-    <div
-      id="dashboardModal"
-      class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-    >
-      <div
-        class="bg-gray-800 p-5 rounded-2xl border border-gray-700 w-full max-w-sm shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto"
-      >
-        <div
-          class="flex justify-between items-center border-b border-gray-700 pb-2"
-        >
-          <h3
-            class="text-sm font-bold text-emerald-400 flex items-center gap-1.5"
-          >
-            📊 Performance Dashboard
-          </h3>
-          <button
-            id="closeDashboardBtn"
-            class="text-gray-400 hover:text-white text-base"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div class="space-y-3">
-          <div class="bg-gray-900/70 p-3 rounded-lg border border-gray-700/60">
-            <span class="text-[11px] text-gray-400 block mb-1"
-              >Trade Breakdown</span
-            >
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-gray-300"
-                >Total Closed:
-                <strong id="dashTotalTrades" class="text-white">0</strong></span
-              >
-              <span class="text-emerald-400"
-                >Wins: <strong id="dashWinCount">0</strong></span
-              >
-              <span class="text-red-400"
-                >Losses: <strong id="dashLossCount">0</strong></span
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div
-              class="bg-gray-900/70 p-2.5 rounded-lg border border-gray-700/60"
-            >
-              <span class="text-[10px] text-gray-400 block">Total Gains</span>
-              <span
-                id="dashTotalGains"
-                class="text-xs font-bold text-emerald-400"
-                >₹0</span
-              >
-            </div>
-            <div
-              class="bg-gray-900/70 p-2.5 rounded-lg border border-gray-700/60"
-            >
-              <span class="text-[10px] text-gray-400 block">Total Losses</span>
-              <span id="dashTotalLosses" class="text-xs font-bold text-red-400"
-                >₹0</span
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div
-              class="bg-gray-900/70 p-2.5 rounded-lg border border-gray-700/60"
-            >
-              <span class="text-[10px] text-gray-400 block"
-                >Avg. Win Trade</span
-              >
-              <span id="dashAvgWin" class="text-xs font-bold text-emerald-400"
-                >₹0</span
-              >
-            </div>
-            <div
-              class="bg-gray-900/70 p-2.5 rounded-lg border border-gray-700/60"
-            >
-              <span class="text-[10px] text-gray-400 block"
-                >Avg. Holding Time</span
-              >
-              <span id="dashAvgHolding" class="text-xs font-bold text-blue-300"
-                >0 days</span
-              >
-            </div>
-          </div>
-
-          <div class="bg-gray-900/70 p-3 rounded-lg border border-gray-700/60">
-            <span class="text-[11px] font-bold text-amber-400 block mb-2"
-              >Strategy / Setup Insights</span
-            >
-            <div id="setupInsightsList" class="space-y-2 text-xs"></div>
-          </div>
-        </div>
-
-        <button
-          id="closeDashboardBottomBtn"
-          class="w-full bg-gray-700 hover:bg-gray-600 text-gray-200 text-xs font-medium py-2 rounded-lg transition"
-        >
-          Close Analytics
-        </button>
-      </div>
     </div>
 
-    <!-- Exit Position Modal -->
-    <div
-      id="closeModal"
-      class="hidden fixed inset-0 bg-black/75 flex items-center justify-center p-4 z-50"
-    >
-      <div
-        class="bg-gray-800 p-4 rounded-xl border border-gray-700 w-full max-w-xs"
-      >
-        <h3 class="text-sm font-bold text-gray-100 mb-2" id="modalTitle">
-          Close Trade
-        </h3>
+  </div>
 
-        <div class="space-y-3 mb-3">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">Exit Date</label>
-            <input
-              type="date"
-              id="exitDateInput"
-              required
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1"
-              >Selling Price (₹)</label
-            >
-            <input
-              type="number"
-              step="0.05"
-              id="exitPriceInput"
-              placeholder="492.00"
-              class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-            />
-          </div>
-        </div>
-
-        <div class="flex gap-2">
-          <button
-            id="confirmCloseBtn"
-            class="flex-1 bg-emerald-600 text-white text-xs font-medium py-2 rounded"
-          >
-            Confirm Exit
-          </button>
-          <button
-            id="cancelModalBtn"
-            class="bg-gray-700 text-gray-300 text-xs font-medium px-3 py-2 rounded"
-          >
-            Cancel
-          </button>
-        </div>
+  <!-- Close Trade Modal -->
+  <div id="closeModal" class="fixed inset-0 bg-black/70 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 w-80 space-y-3">
+      <h3 id="modalTitle" class="text-xs font-bold text-white">Close Position</h3>
+      <div>
+        <label class="text-[10px] text-gray-400 block">Exit Price (₹)</label>
+        <input type="number" step="0.05" id="exitPriceInput" class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none">
+      </div>
+      <div>
+        <label class="text-[10px] text-gray-400 block">Exit Date</label>
+        <input type="date" id="exitDateInput" class="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white focus:outline-none">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button id="cancelModalBtn" class="text-xs px-3 py-1 text-gray-400 hover:text-white">Cancel</button>
+        <button id="confirmCloseBtn" class="text-xs bg-amber-500 hover:bg-amber-600 text-black font-bold px-3 py-1 rounded">Confirm Close</button>
       </div>
     </div>
+  </div>
 
-    <script>
-      // ⚠️ REPLACE THESE WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URLs
-      const SHEET_URL =
-        "https://script.google.com/macros/s/AKfycbzPslWyd37icMjd8fT1Vc_AO8MYd2Rtw_pg11uR5QEFDI3yC1GxCTkhe56bT0XIemc/exec";
-      const FETCH_PRICE_URL =
-        "https://script.google.com/macros/s/AKfycbwIkZSIli0lCYz37X1W0n1eR-toh1iWVjh5lvVxS9AVQYddD5m-GjY4oXsGcwEGAcO5/exec";
+  <!-- Analytics Dashboard Modal -->
+  <div id="dashboardModal" class="fixed inset-0 bg-black/70 flex items-center justify-center hidden z-50">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 w-96 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+        <h3 class="text-xs font-bold text-white">Performance Analytics</h3>
+        <button id="closeDashboardBtn" class="text-gray-400 hover:text-white text-xs">✕</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Total Trades</span><strong id="dashTotalTrades" class="text-white">0</strong></div>
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Wins / Losses</span><span class="text-emerald-400 font-bold" id="dashWinCount">0</span> / <span class="text-red-400 font-bold" id="dashLossCount">0</span></div>
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Total Profit</span><strong id="dashTotalGains" class="text-emerald-400">₹0</strong></div>
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Total Loss</span><strong id="dashTotalLosses" class="text-red-400">₹0</strong></div>
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Avg Win Amount</span><strong id="dashAvgWin" class="text-gray-200">₹0</strong></div>
+        <div class="bg-gray-900 p-2 rounded"><span class="text-gray-400 text-[10px] block">Avg Holding Time</span><strong id="dashAvgHolding" class="text-gray-200">0 days</strong></div>
+      </div>
+      <div>
+        <h4 class="text-[11px] font-semibold text-gray-300 mb-2">Strategy Breakdown</h4>
+        <div id="setupInsightsList" class="space-y-1.5"></div>
+      </div>
+      <div class="text-right">
+        <button id="closeDashboardBottomBtn" class="bg-gray-700 text-xs px-3 py-1 rounded text-gray-300 hover:text-white">Close</button>
+      </div>
+    </div>
+  </div>
 
-      let trades = [];
-      let activeClosingId = null;
-      let autoRefreshTimer = null;
+  <script>
+    // ⚠️ REPLACE THESE WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URLs
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbzPslWyd37icMjd8fT1Vc_AO8MYd2Rtw_pg11uR5QEFDI3yC1GxCTkhe56bT0XIemc/exec";
+  const FETCH_PRICE_URL = "https://script.google.com/macros/s/AKfycbwIkZSIli0lCYz37X1W0n1eR-toh1iWVjh5lvVxS9AVQYddD5m-GjY4oXsGcwEGAcO5/exec";
 
-      const todayStr = new Date().toISOString().split("T")[0];
-      document.getElementById("entryDate").value = todayStr;
-      document.getElementById("exitDateInput").value = todayStr;
+    let trades = [];
+    let activeClosingId = null;
+    let autoRefreshTimer = null;
 
-      function calculateRR(targetPct, stopLossPct) {
-        if (!targetPct || !stopLossPct || stopLossPct <= 0) return null;
-        return (targetPct / stopLossPct).toFixed(2);
+    const todayStr = new Date().toISOString().split('T')[0];
+    document.getElementById('entryDate').value = todayStr;
+    document.getElementById('exitDateInput').value = todayStr;
+
+    function calculateRR(targetPct, stopLossPct) {
+      if (!targetPct || !stopLossPct || stopLossPct <= 0) return null;
+      return (targetPct / stopLossPct).toFixed(2);
+    }
+
+    const targetPctInput = document.getElementById('targetPct');
+    const stopLossPctInput = document.getElementById('stopLossPct');
+    const rrValueEl = document.getElementById('rrValue');
+
+    function updateLiveRRPreview() {
+      const targetPct = parseFloat(targetPctInput.value);
+      const stopLossPct = parseFloat(stopLossPctInput.value);
+      const rr = calculateRR(targetPct, stopLossPct);
+
+      if (rr) {
+        rrValueEl.innerText = `1:${rr}`;
+        rrValueEl.className = rr >= 2 ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold';
+      } else {
+        rrValueEl.innerText = '--';
+        rrValueEl.className = 'text-amber-400';
       }
+    }
 
-      const targetPctInput = document.getElementById("targetPct");
-      const stopLossPctInput = document.getElementById("stopLossPct");
-      const rrValueEl = document.getElementById("rrValue");
+    targetPctInput.addEventListener('input', updateLiveRRPreview);
+    stopLossPctInput.addEventListener('input', updateLiveRRPreview);
 
-      function updateLiveRRPreview() {
-        const targetPct = parseFloat(targetPctInput.value);
-        const stopLossPct = parseFloat(stopLossPctInput.value);
-        const rr = calculateRR(targetPct, stopLossPct);
+    function playSoundNotification(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
 
-        if (rr) {
-          rrValueEl.innerText = `1:${rr}`;
-          rrValueEl.className =
-            rr >= 2 ? "text-emerald-400 font-bold" : "text-amber-400 font-bold";
-        } else {
-          rrValueEl.innerText = "--";
-          rrValueEl.className = "text-amber-400";
+        if (type === 'target') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.4);
+        } else if (type === 'sl') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          osc.frequency.setValueAtTime(150, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.4);
         }
+      } catch (e) {
+        console.log('Audio playback prevented');
       }
+    }
 
-      targetPctInput.addEventListener("input", updateLiveRRPreview);
-      stopLossPctInput.addEventListener("input", updateLiveRRPreview);
+    function checkAlerts(trade, currentCmp) {
+      if (!currentCmp) return;
+      const targetPrice = trade.targetPct ? trade.buyPrice * (1 + trade.targetPct / 100) : null;
+      const stopLossPrice = trade.stopLossPct ? trade.buyPrice * (1 - trade.stopLossPct / 100) : null;
 
-      function playSoundNotification(type) {
-        try {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.connect(gain);
-          gain.connect(ctx.destination);
+      if (targetPrice && currentCmp >= targetPrice) {
+        playSoundNotification('target');
+      } else if (stopLossPrice && currentCmp <= stopLossPrice) {
+        playSoundNotification('sl');
+      }
+    }
 
-          if (type === "target") {
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-            osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15);
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.4);
-          } else if (type === "sl") {
-            osc.type = "sawtooth";
-            osc.frequency.setValueAtTime(300, ctx.currentTime);
-            osc.frequency.setValueAtTime(150, ctx.currentTime + 0.15);
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.4);
-          }
-        } catch (e) {
-          console.log("Audio playback prevented or unsupported");
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      const d = new Date(dateString);
+      return isNaN(d) ? dateString : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+    }
+
+    function getDaysHeld(entryDate, exitDate) {
+      if (!entryDate || !exitDate) return 0;
+      const start = new Date(entryDate);
+      const end = new Date(exitDate);
+      const diffTime = Math.abs(end - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays === 0 ? 1 : diffDays;
+    }
+
+    async function fetchStockPrice(symbol) {
+      const cleanSymbol = symbol.toUpperCase().trim().replace('.NS', '').replace('.BO', '');
+      try {
+        const res = await fetch(`${FETCH_PRICE_URL}?action=FETCH_PRICE&ticker=${cleanSymbol}`, { redirect: 'follow' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.status === 'success' && data.price) {
+          return parseFloat(data.price);
         }
+      } catch (err) {
+        console.error(`Fetch exception for ${symbol}:`, err);
       }
+      return null;
+    }
 
-      function checkAlerts(trade, currentCmp) {
-        if (!currentCmp) return;
-        const targetPrice = trade.targetPct
-          ? trade.buyPrice * (1 + trade.targetPct / 100)
-          : null;
-        const stopLossPrice = trade.stopLossPct
-          ? trade.buyPrice * (1 - trade.stopLossPct / 100)
-          : null;
-
-        if (targetPrice && currentCmp >= targetPrice) {
-          playSoundNotification("target");
-        } else if (stopLossPrice && currentCmp <= stopLossPrice) {
-          playSoundNotification("sl");
+    async function loadTradesFromSheet() {
+      openTradeList.innerHTML = '<p class="text-center text-[11px] text-gray-400 py-2">Loading trades from Google Sheet...</p>';
+      try {
+        const response = await fetch(SHEET_URL, { redirect: 'follow' });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      }
-
-      function formatDate(dateString) {
-        if (!dateString) return "";
-        const d = new Date(dateString);
-        return isNaN(d)
-          ? dateString
-          : d.toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
-      }
-
-      function getDaysHeld(entryDate, exitDate) {
-        if (!entryDate || !exitDate) return 0;
-        const start = new Date(entryDate);
-        const end = new Date(exitDate);
-        const diffTime = Math.abs(end - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays === 0 ? 1 : diffDays;
-      }
-
-      // Uses FETCH_PRICE_URL exclusively
-      async function fetchStockPrice(symbol) {
-        const cleanSymbol = symbol
-          .toUpperCase()
-          .trim()
-          .replace(".NS", "")
-          .replace(".BO", "");
-        try {
-          const res = await fetch(
-            `${FETCH_PRICE_URL}?action=FETCH_PRICE&ticker=${cleanSymbol}`,
-            { redirect: "follow" },
-          );
-          if (!res.ok) return null;
-          const data = await res.json();
-          if (data.status === "success" && data.price) {
-            return parseFloat(data.price);
-          }
-        } catch (err) {
-          console.error(`Fetch exception for ${symbol}:`, err);
-        }
-        return null;
-      }
-
-      // Uses SHEET_URL exclusively
-      async function loadTradesFromSheet() {
-        openTradeList.innerHTML =
-          '<p class="text-center text-[11px] text-gray-400 py-2">Loading trades from Google Sheet...</p>';
-        try {
-          const response = await fetch(SHEET_URL);
-          const data = await response.json();
-
-          trades = data
-            .filter((item) => item.id && item.symbol) // Filter out empty records
-            .map((item) => ({
-              id: String(item.id),
-              entryDate: item.entryDate || "",
-              exitDate: item.exitDate || null,
-              holdingDays: item.holdingDays ? parseInt(item.holdingDays) : null,
-              symbol: String(item.symbol || "").toUpperCase(),
-              buyPrice: parseFloat(item.entryPrice || item.buyPrice || 0),
-              quantity: parseInt(item.qty || item.quantity || 0),
-              targetPct: item.targetPct ? parseFloat(item.targetPct) : null,
-              stopLossPct: item.stopLossPct
-                ? parseFloat(item.stopLossPct)
-                : null,
-              setup: item.setup || "",
-              cmp: item.cmp
-                ? parseFloat(item.cmp)
-                : parseFloat(item.entryPrice || item.buyPrice || 0),
-              lastUpdatedSource: item.lastUpdatedSource || "MANUAL",
-              lastUpdatedTime: item.lastUpdatedTime || "",
-              status: item.status || "OPEN",
-              sellPrice: item.exitPrice ? parseFloat(item.exitPrice) : null,
-              pl: item.pl ? parseFloat(item.pl) : null,
-              returnPct: item.returnPct ? parseFloat(item.returnPct) : null,
-            }));
-
-          renderTrades();
-          updateMetrics();
-        } catch (error) {
-          console.error("Error loading trades:", error);
-          openTradeList.innerHTML =
-            '<p class="text-center text-[11px] text-red-400 py-2">Failed to connect to Google Sheet backend.</p>';
-        }
-      }
-
-      const tradeForm = document.getElementById("tradeForm");
-      const submitBtn = document.getElementById("submitBtn");
-      const openTradeList = document.getElementById("openTradeList");
-      const closedTradeList = document.getElementById("closedTradeList");
-      const totalPlEl = document.getElementById("totalPl");
-      const winRateEl = document.getElementById("winRate");
-      const activeCountEl = document.getElementById("activeCount");
-      const closeModal = document.getElementById("closeModal");
-      const exitPriceInput = document.getElementById("exitPriceInput");
-      const exitDateInput = document.getElementById("exitDateInput");
-      const modalTitle = document.getElementById("modalTitle");
-      const searchInput = document.getElementById("searchInput");
-
-      async function fetchAllCmps() {
-        const fetchBtn = document.getElementById("fetchCmpBtn");
-        fetchBtn.innerText = "⏳ Fetching...";
-        fetchBtn.disabled = true;
-
-        const openTrades = trades.filter((t) => t.status === "OPEN");
-        const currentTime = new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-
-        for (const t of openTrades) {
-          const livePrice = await fetchStockPrice(t.symbol);
-          if (livePrice !== null && !isNaN(livePrice)) {
-            t.cmp = livePrice;
-            t.lastUpdatedSource = "LIVE";
-            t.lastUpdatedTime = currentTime;
-            checkAlerts(t, livePrice);
-
-            // Update trade status in Sheet
-            await fetch(SHEET_URL, {
-              method: "POST",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({ action: "ADD_TRADE", trade: t }),
-            });
-          }
-        }
+        const data = await response.json();
+        
+        trades = data
+          .filter(item => item && item.id && item.symbol) // Filter out empty records
+          .map(item => ({
+            id: String(item.id),
+            entryDate: item.entryDate || '',
+            exitDate: item.exitDate || null,
+            holdingDays: item.holdingDays ? parseInt(item.holdingDays) : null,
+            symbol: String(item.symbol || '').toUpperCase(),
+            buyPrice: parseFloat(item.entryPrice || item.buyPrice || 0),
+            quantity: parseInt(item.qty || item.quantity || 0),
+            targetPct: item.targetPct ? parseFloat(item.targetPct) : null,
+            stopLossPct: item.stopLossPct ? parseFloat(item.stopLossPct) : null,
+            setup: item.setup || '',
+            cmp: item.cmp ? parseFloat(item.cmp) : parseFloat(item.entryPrice || item.buyPrice || 0),
+            lastUpdatedSource: item.lastUpdatedSource || 'MANUAL',
+            lastUpdatedTime: item.lastUpdatedTime || '',
+            status: item.status || 'OPEN',
+            sellPrice: item.exitPrice ? parseFloat(item.exitPrice) : null,
+            pl: item.pl ? parseFloat(item.pl) : null,
+            returnPct: item.returnPct ? parseFloat(item.returnPct) : null
+          }));
 
         renderTrades();
-        fetchBtn.innerText = "🔄 Fetch Live Prices";
-        fetchBtn.disabled = false;
+        updateMetrics();
+      } catch (error) {
+        console.error("Error loading trades:", error);
+        openTradeList.innerHTML = '<p class="text-center text-[11px] text-red-400 py-2">Failed to connect to Google Sheet backend.</p>';
       }
+    }
 
-      function toggleAutoRefresh() {
-        const btn = document.getElementById("autoRefreshBtn");
-        if (autoRefreshTimer) {
-          clearInterval(autoRefreshTimer);
-          autoRefreshTimer = null;
-          btn.innerText = "⏱️ Auto: OFF";
-          btn.className =
-            "text-[10px] bg-gray-800 text-gray-400 border border-gray-700 hover:text-white px-2 py-0.5 rounded transition";
-        } else {
-          fetchAllCmps();
-          autoRefreshTimer = setInterval(fetchAllCmps, 60000);
-          btn.innerText = "⏱️ Auto: ON (60s)";
-          btn.className =
-            "text-[10px] bg-emerald-900/50 text-emerald-300 border border-emerald-600/50 px-2 py-0.5 rounded transition font-medium";
-        }
-      }
+    const tradeForm = document.getElementById('tradeForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const openTradeList = document.getElementById('openTradeList');
+    const closedTradeList = document.getElementById('closedTradeList');
+    const totalPlEl = document.getElementById('totalPl');
+    const winRateEl = document.getElementById('winRate');
+    const activeCountEl = document.getElementById('activeCount');
+    const closeModal = document.getElementById('closeModal');
+    const exitPriceInput = document.getElementById('exitPriceInput');
+    const exitDateInput = document.getElementById('exitDateInput');
+    const modalTitle = document.getElementById('modalTitle');
+    const searchInput = document.getElementById('searchInput');
 
-      async function updateManualCmp(tradeId, value) {
-        const newPrice = parseFloat(value);
-        if (isNaN(newPrice)) return;
+    async function fetchAllCmps() {
+      const fetchBtn = document.getElementById('fetchCmpBtn');
+      fetchBtn.innerText = '⏳ Fetching...';
+      fetchBtn.disabled = true;
 
-        const trade = trades.find((t) => t.id == tradeId);
-        if (trade) {
-          trade.cmp = newPrice;
-          trade.lastUpdatedSource = "MANUAL";
-          trade.lastUpdatedTime = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          });
+      const openTrades = trades.filter(t => t.status === 'OPEN');
+      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-          checkAlerts(trade, newPrice);
-          renderTrades();
-
-          await fetch(SHEET_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "ADD_TRADE", trade }),
-          });
-        }
-      }
-
-      tradeForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        submitBtn.innerText = "⏳ Saving...";
-        submitBtn.disabled = true;
-
-        const newTrade = {
-          id: Date.now().toString(),
-          entryDate: document.getElementById("entryDate").value,
-          exitDate: "",
-          holdingDays: "",
-          symbol: document.getElementById("symbol").value.toUpperCase().trim(),
-          buyPrice: parseFloat(document.getElementById("buyPrice").value),
-          quantity: parseInt(document.getElementById("quantity").value),
-          targetPct:
-            parseFloat(document.getElementById("targetPct").value) || "",
-          stopLossPct:
-            parseFloat(document.getElementById("stopLossPct").value) || "",
-          setup: document.getElementById("setup").value,
-          cmp: parseFloat(document.getElementById("buyPrice").value),
-          lastUpdatedSource: "MANUAL",
-          lastUpdatedTime: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          status: "OPEN",
-          sellPrice: "",
-          pl: "",
-          returnPct: "",
-        };
-
-        try {
-          await fetch(SHEET_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "ADD_TRADE", trade: newTrade }),
-          });
-
-          tradeForm.reset();
-          document.getElementById("entryDate").value = todayStr;
-          updateLiveRRPreview();
-          await loadTradesFromSheet();
-
-          const livePrice = await fetchStockPrice(newTrade.symbol);
-          if (livePrice) {
-            newTrade.cmp = livePrice;
-            newTrade.lastUpdatedSource = "LIVE";
-            newTrade.lastUpdatedTime = new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            });
-            checkAlerts(newTrade, livePrice);
-
-            await fetch(SHEET_URL, {
-              method: "POST",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({ action: "ADD_TRADE", trade: newTrade }),
-            });
-            loadTradesFromSheet();
-          }
-        } catch (err) {
-          alert("Failed to save trade to Google Sheet.");
-        } finally {
-          submitBtn.innerText = "Open Position";
-          submitBtn.disabled = false;
-        }
-      });
-
-      function promptClose(id) {
-        activeClosingId = id;
-        const trade = trades.find((t) => t.id == id);
-        modalTitle.innerText = `Close ${trade.symbol} (${trade.quantity} Qty)`;
-        exitPriceInput.value = trade.cmp || trade.buyPrice;
-        exitDateInput.value = todayStr;
-        closeModal.classList.remove("hidden");
-      }
-
-      document
-        .getElementById("cancelModalBtn")
-        .addEventListener("click", () => {
-          closeModal.classList.add("hidden");
-        });
-
-      document
-        .getElementById("confirmCloseBtn")
-        .addEventListener("click", async () => {
-          const sellPrice = parseFloat(exitPriceInput.value);
-          const exitDate = exitDateInput.value;
-
-          if (!sellPrice || sellPrice <= 0)
-            return alert("Enter valid sell price");
-          if (!exitDate) return alert("Select exit date");
-
-          const trade = trades.find((t) => t.id == activeClosingId);
-          if (!trade) return;
-
-          closeModal.classList.add("hidden");
-          openTradeList.innerHTML =
-            '<p class="text-center text-[11px] text-gray-400 py-2">Updating trade status...</p>';
-
-          const updatedTrade = {
-            ...trade,
-            exitDate: exitDate,
-            holdingDays: getDaysHeld(trade.entryDate, exitDate),
-            sellPrice: sellPrice,
-            pl: (sellPrice - trade.buyPrice) * trade.quantity,
-            returnPct: (
-              ((sellPrice - trade.buyPrice) / trade.buyPrice) *
-              100
-            ).toFixed(2),
-            status: "CLOSED",
-          };
+      for (const t of openTrades) {
+        const livePrice = await fetchStockPrice(t.symbol);
+        if (livePrice !== null && !isNaN(livePrice)) {
+          t.cmp = livePrice;
+          t.lastUpdatedSource = 'LIVE';
+          t.lastUpdatedTime = currentTime;
+          checkAlerts(t, livePrice);
 
           try {
             await fetch(SHEET_URL, {
               method: "POST",
               headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({
-                action: "ADD_TRADE",
-                trade: updatedTrade,
-              }),
+              body: JSON.stringify({ action: "ADD_TRADE", trade: t }),
+              redirect: "follow"
             });
-            await loadTradesFromSheet();
-          } catch (error) {
-            alert("Failed to update trade in Google Sheet.");
-            loadTradesFromSheet();
+          } catch (err) {
+            console.error(`Failed to update CMP for ${t.symbol}:`, err);
           }
-        });
+        }
+      }
 
-      async function deleteTrade(id) {
-        if (
-          !confirm(
-            "Are you sure you want to delete this trade from Google Sheet?",
-          )
-        )
-          return;
+      renderTrades();
+      fetchBtn.innerText = '🔄 Fetch Live Prices';
+      fetchBtn.disabled = false;
+    }
+
+    function toggleAutoRefresh() {
+      const btn = document.getElementById('autoRefreshBtn');
+      if (autoRefreshTimer) {
+        clearInterval(autoRefreshTimer);
+        autoRefreshTimer = null;
+        btn.innerText = '⏱️ Auto: OFF';
+        btn.className = 'text-[10px] bg-gray-800 text-gray-400 border border-gray-700 hover:text-white px-2 py-0.5 rounded transition';
+      } else {
+        fetchAllCmps();
+        autoRefreshTimer = setInterval(fetchAllCmps, 60000);
+        btn.innerText = '⏱️ Auto: ON (60s)';
+        btn.className = 'text-[10px] bg-emerald-900/50 text-emerald-300 border border-emerald-600/50 px-2 py-0.5 rounded transition font-medium';
+      }
+    }
+
+    async function updateManualCmp(tradeId, value) {
+      const newPrice = parseFloat(value);
+      if (isNaN(newPrice)) return;
+
+      const trade = trades.find(t => t.id == tradeId);
+      if (trade) {
+        trade.cmp = newPrice;
+        trade.lastUpdatedSource = 'MANUAL';
+        trade.lastUpdatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        
+        checkAlerts(trade, newPrice);
+        renderTrades();
 
         try {
           await fetch(SHEET_URL, {
             method: "POST",
             headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "DELETE_TRADE", id: String(id) }),
+            body: JSON.stringify({ action: "ADD_TRADE", trade }),
+            redirect: "follow"
           });
-          await loadTradesFromSheet();
         } catch (err) {
-          alert("Failed to delete trade.");
+          console.error("Failed to update manual CMP:", err);
         }
       }
+    }
 
-      searchInput.addEventListener("input", renderTrades);
+    tradeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.innerText = '⏳ Saving...';
+      submitBtn.disabled = true;
 
-      function updateMetrics() {
-        const openTrades = trades.filter((t) => t.status === "OPEN");
-        const closedTrades = trades.filter((t) => t.status === "CLOSED");
+      const newTrade = {
+        id: Date.now().toString(),
+        entryDate: document.getElementById('entryDate').value,
+        exitDate: "",
+        holdingDays: "",
+        symbol: document.getElementById('symbol').value.toUpperCase().trim(),
+        buyPrice: parseFloat(document.getElementById('buyPrice').value),
+        quantity: parseInt(document.getElementById('quantity').value),
+        targetPct: parseFloat(document.getElementById('targetPct').value) || "",
+        stopLossPct: parseFloat(document.getElementById('stopLossPct').value) || "",
+        setup: document.getElementById('setup').value,
+        cmp: parseFloat(document.getElementById('buyPrice').value),
+        lastUpdatedSource: 'MANUAL',
+        lastUpdatedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: 'OPEN',
+        sellPrice: "",
+        pl: "",
+        returnPct: ""
+      };
 
-        activeCountEl.innerText = openTrades.length;
-
-        if (closedTrades.length === 0) {
-          totalPlEl.innerText = "₹0";
-          totalPlEl.className = "text-xs font-bold text-gray-200";
-          winRateEl.innerText = "0%";
-          return;
-        }
-
-        const totalPl = closedTrades.reduce((sum, t) => sum + (t.pl || 0), 0);
-        const wins = closedTrades.filter((t) => t.pl > 0).length;
-        const winRate = ((wins / closedTrades.length) * 100).toFixed(0);
-
-        totalPlEl.innerText = `₹${totalPl.toLocaleString("en-IN")}`;
-        totalPlEl.className = `text-xs font-bold ${totalPl >= 0 ? "text-emerald-400" : "text-red-400"}`;
-        winRateEl.innerText = `${winRate}%`;
-      }
-
-      function renderTrades() {
-        openTradeList.innerHTML = "";
-        closedTradeList.innerHTML = "";
-
-        const query = searchInput.value.toLowerCase().trim();
-
-        const openTrades = trades.filter(
-          (t) =>
-            t.status === "OPEN" &&
-            (t.symbol.toLowerCase().includes(query) ||
-              (t.setup && t.setup.toLowerCase().includes(query))),
-        );
-        const closedTrades = trades.filter(
-          (t) =>
-            t.status === "CLOSED" &&
-            (t.symbol.toLowerCase().includes(query) ||
-              (t.setup && t.setup.toLowerCase().includes(query))),
-        );
-
-        if (openTrades.length === 0) {
-          openTradeList.innerHTML =
-            '<p class="text-center text-[11px] text-gray-500 py-2">No active open positions matching search.</p>';
-        } else {
-          openTrades.forEach((t) => {
-            const buyPrice = parseFloat(t.buyPrice || 0);
-            const currentCmp = parseFloat(t.cmp || t.buyPrice || 0);
-            const qty = parseInt(t.quantity || 0);
-
-            const returnPct =
-              buyPrice > 0
-                ? (((currentCmp - buyPrice) / buyPrice) * 100).toFixed(2)
-                : "0.00";
-            const pnlAmount = ((currentCmp - buyPrice) * qty).toFixed(2);
-            const isGain = parseFloat(returnPct) >= 0;
-
-            const targetPrice = t.targetPct
-              ? (buyPrice * (1 + t.targetPct / 100)).toFixed(2)
-              : null;
-            const stopLossPrice = t.stopLossPct
-              ? (buyPrice * (1 - t.stopLossPct / 100)).toFixed(2)
-              : null;
-            const rrRatio = calculateRR(t.targetPct, t.stopLossPct);
-
-            let alertBadge = "";
-            if (targetPrice && currentCmp >= parseFloat(targetPrice)) {
-              alertBadge =
-                '<span class="text-[9px] bg-emerald-900/80 text-emerald-300 border border-emerald-500 px-1.5 py-0.5 rounded font-semibold animate-pulse">🎯 Target Hit</span>';
-            } else if (
-              stopLossPrice &&
-              currentCmp <= parseFloat(stopLossPrice)
-            ) {
-              alertBadge =
-                '<span class="text-[9px] bg-red-900/80 text-red-300 border border-red-500 px-1.5 py-0.5 rounded font-semibold animate-pulse">⚠️ SL Hit</span>';
-            }
-
-            const card = document.createElement("div");
-            card.className =
-              "bg-gray-800 p-3 rounded-lg border-l-4 border-amber-400 border-y border-r border-gray-700 space-y-2";
-            card.innerHTML = `
-          <div class="flex justify-between items-start">
-            <div>
-              <div class="flex items-center gap-1.5 flex-wrap mb-1">
-                <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
-                <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || "NONE"}</span>
-                ${rrRatio ? `<span class="text-[9px] bg-amber-900/40 text-amber-300 border border-amber-700/50 px-1 py-0.5 rounded">R:R 1:${rrRatio}</span>` : ""}
-                ${alertBadge}
-              </div>
-              <div class="text-[11px] text-gray-300 font-medium">
-                Amount: <strong class="text-white">₹${(buyPrice * qty).toLocaleString("en-IN")}</strong> <span class="text-gray-400 text-[10px]">(₹${buyPrice} × ${qty} Qty)</span>
-              </div>
-              
-              <div class="flex items-center gap-2 text-[10px] text-gray-400 mt-1">
-                <span>🎯 Tgt: <strong class="text-emerald-400">${targetPrice ? "₹" + Number(targetPrice).toLocaleString("en-IN") + " (+" + t.targetPct + "%)" : "-"}</strong></span>
-                <span>🛑 SL: <strong class="text-red-400">${stopLossPrice ? "₹" + Number(stopLossPrice).toLocaleString("en-IN") + " (-" + t.stopLossPct + "%)" : "-"}</strong></span>
-              </div>
-              <div class="text-[10px] text-gray-400 mt-0.5">📅 ${formatDate(t.entryDate)}</div>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <button onclick="promptClose('${t.id}')" class="bg-amber-500 hover:bg-amber-600 text-black text-[11px] font-bold px-2 py-1 rounded">Close</button>
-              <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs px-0.5">✕</button>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center bg-gray-900/60 p-2 rounded border border-gray-700/50 text-xs">
-            <div class="flex flex-col gap-1">
-              <div class="flex items-center gap-1">
-                <span class="text-[10px] text-gray-400">CMP: ₹</span>
-                <input 
-                  type="number" 
-                  step="0.05" 
-                  value="${currentCmp}" 
-                  onchange="updateManualCmp('${t.id}', this.value)" 
-                  class="w-20 bg-gray-800 border border-gray-600 rounded px-1.5 py-0.5 text-xs text-white focus:outline-none focus:border-emerald-500 font-semibold"
-                >
-              </div>
-
-              <div class="flex items-center gap-1 text-[9px]">
-                <span class="inline-block w-1.5 h-1.5 rounded-full ${t.lastUpdatedSource === "LIVE" ? "bg-emerald-400 animate-pulse" : t.lastUpdatedSource === "MANUAL" ? "bg-amber-400" : "bg-gray-500"}"></span>
-                <span class="text-gray-400 font-mono">
-                  ${t.lastUpdatedTime ? `${t.lastUpdatedSource === "LIVE" ? "Live" : "Manual"} @ ${t.lastUpdatedTime}` : "Not set"}
-                </span>
-              </div>
-            </div>
-
-            <div class="text-right">
-              <span class="text-[10px] text-gray-400 block">Unrealized P&L</span>
-              <div class="font-bold text-xs ${isGain ? "text-emerald-400" : "text-red-400"}">
-                ${isGain ? "+" : ""}₹${Number(pnlAmount).toLocaleString("en-IN")}
-              </div>
-              <div class="text-[10px] font-semibold ${isGain ? "text-emerald-400" : "text-red-400"}">
-                (${isGain ? "+" : ""}${returnPct}%)
-              </div>
-            </div>
-          </div>
-        `;
-            openTradeList.appendChild(card);
-          });
-        }
-
-        if (closedTrades.length === 0) {
-          closedTradeList.innerHTML =
-            '<p class="text-center text-[11px] text-gray-500 py-2">No closed trades matching search.</p>';
-        } else {
-          closedTrades.forEach((t) => {
-            const isProfit = (t.pl || 0) >= 0;
-            const daysHeld =
-              t.holdingDays || getDaysHeld(t.entryDate, t.exitDate);
-            const card = document.createElement("div");
-            card.className = `bg-gray-800 p-2.5 rounded-lg border-l-4 ${isProfit ? "border-emerald-500" : "border-red-500"} border-y border-r border-gray-700 flex justify-between items-center`;
-            card.innerHTML = `
-          <div>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
-              <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || "NONE"}</span>
-              <span class="text-[9px] bg-blue-900/60 text-blue-300 border border-blue-700/50 px-1 py-0.5 rounded">⏱️ ${daysHeld} ${daysHeld === 1 ? "day" : "days"}</span>
-            </div>
-            <div class="text-[10px] text-gray-400 mt-0.5">
-              📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
-            </div>
-            <div class="text-[11px] text-gray-400 mt-0.5">
-              Buy: ₹${t.buyPrice} | Exit: ₹${t.sellPrice} | Qty: ${t.quantity}
-            </div>
-          </div>
-          <div class="text-right flex items-center gap-2">
-            <div>
-              <div class="text-xs font-bold ${isProfit ? "text-emerald-400" : "text-red-400"}">
-                ${isProfit ? "+" : ""}₹${(t.pl || 0).toLocaleString("en-IN")}
-              </div>
-              <div class="text-[9px] ${isProfit ? "text-emerald-400" : "text-red-400"}">
-                ${isProfit ? "+" : ""}${t.returnPct || "0.00"}%
-              </div>
-            </div>
-            <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs">✕</button>
-          </div>
-        `;
-            closedTradeList.appendChild(card);
-          });
-        }
-      }
-
-      // Modal Events
-      const dashboardModal = document.getElementById("dashboardModal");
-      const openDashboardBtn = document.getElementById("openDashboardBtn");
-      const closeDashboardBtn = document.getElementById("closeDashboardBtn");
-      const closeDashboardBottomBtn = document.getElementById(
-        "closeDashboardBottomBtn",
-      );
-
-      openDashboardBtn.addEventListener("click", () => {
-        renderDashboardMetrics();
-        dashboardModal.classList.remove("hidden");
-      });
-
-      closeDashboardBtn.addEventListener("click", () =>
-        dashboardModal.classList.add("hidden"),
-      );
-      closeDashboardBottomBtn.addEventListener("click", () =>
-        dashboardModal.classList.add("hidden"),
-      );
-
-      function renderDashboardMetrics() {
-        const closedTrades = trades.filter((t) => t.status === "CLOSED");
-        const totalCount = closedTrades.length;
-
-        const wins = closedTrades.filter((t) => (t.pl || 0) > 0);
-        const losses = closedTrades.filter((t) => (t.pl || 0) < 0);
-
-        const totalGains = wins.reduce((sum, t) => sum + (t.pl || 0), 0);
-        const totalLosses = losses.reduce(
-          (sum, t) => sum + Math.abs(t.pl || 0),
-          0,
-        );
-
-        const avgWin =
-          wins.length > 0 ? Math.round(totalGains / wins.length) : 0;
-        const totalDays = closedTrades.reduce(
-          (sum, t) =>
-            sum + (t.holdingDays || getDaysHeld(t.entryDate, t.exitDate)),
-          0,
-        );
-        const avgHolding =
-          totalCount > 0 ? (totalDays / totalCount).toFixed(1) : 0;
-
-        document.getElementById("dashTotalTrades").innerText = totalCount;
-        document.getElementById("dashWinCount").innerText = wins.length;
-        document.getElementById("dashLossCount").innerText = losses.length;
-        document.getElementById("dashTotalGains").innerText =
-          `₹${totalGains.toLocaleString("en-IN")}`;
-        document.getElementById("dashTotalLosses").innerText =
-          `₹${totalLosses.toLocaleString("en-IN")}`;
-        document.getElementById("dashAvgWin").innerText =
-          `₹${avgWin.toLocaleString("en-IN")}`;
-        document.getElementById("dashAvgHolding").innerText =
-          `${avgHolding} days`;
-
-        const setupListEl = document.getElementById("setupInsightsList");
-        setupListEl.innerHTML = "";
-
-        const setups = [
-          "DARVAS BOX",
-          "SUPER BREAKOUT",
-          "RSI CROSSES BELOW 30",
-          "RSI 14 CROSSES ABOVE SMA RSI 20",
-          "EMA14 CROSS SMA44 COMBINED RSI VOLUME",
-        ];
-
-        setups.forEach((s) => {
-          const matchingClosed = closedTrades.filter((t) => t.setup === s);
-          const count = matchingClosed.length;
-          if (count > 0) {
-            const sWins = matchingClosed.filter((t) => (t.pl || 0) > 0).length;
-            const sWinRate = Math.round((sWins / count) * 100);
-            const sPl = matchingClosed.reduce((acc, t) => acc + (t.pl || 0), 0);
-
-            const row = document.createElement("div");
-            row.className =
-              "bg-gray-800 p-2 rounded border border-gray-700/80 flex justify-between items-center";
-            row.innerHTML = `
-          <div>
-            <div class="font-medium text-gray-200 text-[10px]">${s}</div>
-            <div class="text-[9px] text-gray-400">Trades: ${count} | Win Rate: <span class="text-emerald-400">${sWinRate}%</span></div>
-          </div>
-          <div class="text-right font-bold text-[11px] ${sPl >= 0 ? "text-emerald-400" : "text-red-400"}">
-            ${sPl >= 0 ? "+" : ""}₹${sPl.toLocaleString("en-IN")}
-          </div>
-        `;
-            setupListEl.appendChild(row);
-          }
+      try {
+        const res = await fetch(SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "ADD_TRADE", trade: newTrade }),
+          redirect: "follow"
         });
 
-        if (setupListEl.innerHTML === "") {
-          setupListEl.innerHTML =
-            '<p class="text-[10px] text-gray-500 italic">No closed trade data available for strategies yet.</p>';
+        if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
+
+        tradeForm.reset();
+        document.getElementById('entryDate').value = todayStr;
+        updateLiveRRPreview();
+        await loadTradesFromSheet();
+
+        const livePrice = await fetchStockPrice(newTrade.symbol);
+        if (livePrice) {
+          newTrade.cmp = livePrice;
+          newTrade.lastUpdatedSource = 'LIVE';
+          newTrade.lastUpdatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          checkAlerts(newTrade, livePrice);
+          
+          await fetch(SHEET_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "ADD_TRADE", trade: newTrade }),
+            redirect: "follow"
+          });
+          loadTradesFromSheet();
         }
+      } catch (err) {
+        console.error("Save error details:", err);
+        alert("Failed to save trade to Google Sheet.");
+      } finally {
+        submitBtn.innerText = 'Open Position';
+        submitBtn.disabled = false;
+      }
+    });
+
+    function promptClose(id) {
+      activeClosingId = id;
+      const trade = trades.find(t => t.id == id);
+      modalTitle.innerText = `Close ${trade.symbol} (${trade.quantity} Qty)`;
+      exitPriceInput.value = trade.cmp || trade.buyPrice;
+      exitDateInput.value = todayStr;
+      closeModal.classList.remove('hidden');
+    }
+
+    document.getElementById('cancelModalBtn').addEventListener('click', () => {
+      closeModal.classList.add('hidden');
+    });
+
+    document.getElementById('confirmCloseBtn').addEventListener('click', async () => {
+      const sellPrice = parseFloat(exitPriceInput.value);
+      const exitDate = exitDateInput.value;
+
+      if (!sellPrice || sellPrice <= 0) return alert('Enter valid sell price');
+      if (!exitDate) return alert('Select exit date');
+
+      const trade = trades.find(t => t.id == activeClosingId);
+      if (!trade) return;
+
+      closeModal.classList.add('hidden');
+      openTradeList.innerHTML = '<p class="text-center text-[11px] text-gray-400 py-2">Updating trade status...</p>';
+
+      const updatedTrade = {
+        ...trade,
+        exitDate: exitDate,
+        holdingDays: getDaysHeld(trade.entryDate, exitDate),
+        sellPrice: sellPrice,
+        pl: (sellPrice - trade.buyPrice) * trade.quantity,
+        returnPct: (((sellPrice - trade.buyPrice) / trade.buyPrice) * 100).toFixed(2),
+        status: 'CLOSED'
+      };
+
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "ADD_TRADE", trade: updatedTrade }),
+          redirect: "follow"
+        });
+        await loadTradesFromSheet();
+      } catch (error) {
+        console.error("Update trade error:", error);
+        alert("Failed to update trade in Google Sheet.");
+        loadTradesFromSheet();
+      }
+    });
+
+    async function deleteTrade(id) {
+      if (!confirm('Are you sure you want to delete this trade from Google Sheet?')) return;
+      
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "DELETE_TRADE", id: String(id) }),
+          redirect: "follow"
+        });
+        await loadTradesFromSheet();
+      } catch (err) {
+        console.error("Delete error:", err);
+        alert("Failed to delete trade.");
+      }
+    }
+
+    searchInput.addEventListener('input', renderTrades);
+
+    function updateMetrics() {
+      const openTrades = trades.filter(t => t.status === 'OPEN');
+      const closedTrades = trades.filter(t => t.status === 'CLOSED');
+
+      activeCountEl.innerText = openTrades.length;
+
+      if (closedTrades.length === 0) {
+        totalPlEl.innerText = '₹0';
+        totalPlEl.className = 'text-xs font-bold text-gray-200';
+        winRateEl.innerText = '0%';
+        return;
       }
 
-      // Initial Load
-      loadTradesFromSheet();
-    </script>
-  </body>
+      const totalPl = closedTrades.reduce((sum, t) => sum + (t.pl || 0), 0);
+      const wins = closedTrades.filter(t => t.pl > 0).length;
+      const winRate = ((wins / closedTrades.length) * 100).toFixed(0);
+
+      totalPlEl.innerText = `₹${totalPl.toLocaleString('en-IN')}`;
+      totalPlEl.className = `text-xs font-bold ${totalPl >= 0 ? 'text-emerald-400' : 'text-red-400'}`;
+      winRateEl.innerText = `${winRate}%`;
+    }
+
+    function renderTrades() {
+      openTradeList.innerHTML = '';
+      closedTradeList.innerHTML = '';
+
+      const query = searchInput.value.toLowerCase().trim();
+
+      const openTrades = trades.filter(t => t.status === 'OPEN' && (t.symbol.toLowerCase().includes(query) || (t.setup && t.setup.toLowerCase().includes(query))));
+      const closedTrades = trades.filter(t => t.status === 'CLOSED' && (t.symbol.toLowerCase().includes(query) || (t.setup && t.setup.toLowerCase().includes(query))));
+
+      if (openTrades.length === 0) {
+        openTradeList.innerHTML = '<p class="text-center text-[11px] text-gray-500 py-2">No active open positions matching search.</p>';
+      } else {
+        openTrades.forEach(t => {
+          const buyPrice = parseFloat(t.buyPrice || 0);
+          const currentCmp = parseFloat(t.cmp || t.buyPrice || 0);
+          const qty = parseInt(t.quantity || 0);
+
+          const returnPct = buyPrice > 0 ? (((currentCmp - buyPrice) / buyPrice) * 100).toFixed(2) : '0.00';
+          const pnlAmount = ((currentCmp - buyPrice) * qty).toFixed(2);
+          const isGain = parseFloat(returnPct) >= 0;
+
+          const targetPrice = t.targetPct ? (buyPrice * (1 + t.targetPct / 100)).toFixed(2) : null;
+          const stopLossPrice = t.stopLossPct ? (buyPrice * (1 - t.stopLossPct / 100)).toFixed(2) : null;
+          const rrRatio = calculateRR(t.targetPct, t.stopLossPct);
+
+          let alertBadge = '';
+          if (targetPrice && currentCmp >= parseFloat(targetPrice)) {
+            alertBadge = '<span class="text-[9px] bg-emerald-900/80 text-emerald-300 border border-emerald-500 px-1.5 py-0.5 rounded font-semibold animate-pulse">🎯 Target Hit</span>';
+          } else if (stopLossPrice && currentCmp <= parseFloat(stopLossPrice)) {
+            alertBadge = '<span class="text-[9px] bg-red-900/80 text-red-300 border border-red-500 px-1.5 py-0.5 rounded font-semibold animate-pulse">⚠️ SL Hit</span>';
+          }
+
+          const card = document.createElement('div');
+          card.className = 'bg-gray-800 p-3 rounded-lg border-l-4 border-amber-400 border-y border-r border-gray-700 space-y-2';
+          card.innerHTML = `
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="flex items-center gap-1.5 flex-wrap mb-1">
+                  <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
+                  <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || 'NONE'}</span>
+                  ${rrRatio ? `<span class="text-[9px] bg-amber-900/40 text-amber-300 border border-amber-700/50 px-1 py-0.5 rounded">R:R 1:${rrRatio}</span>` : ''}
+                  ${alertBadge}
+                </div>
+                <div class="text-[11px] text-gray-300 font-medium">
+                  Amount: <strong class="text-white">₹${(buyPrice * qty).toLocaleString('en-IN')}</strong> <span class="text-gray-400 text-[10px]">(₹${buyPrice} × ${qty} Qty)</span>
+                </div>
+                
+                <div class="flex items-center gap-2 text-[10px] text-gray-400 mt-1">
+                  <span>🎯 Tgt: <strong class="text-emerald-400">${targetPrice ? '₹' + Number(targetPrice).toLocaleString('en-IN') + ' (+' + t.targetPct + '%)' : '-'}</strong></span>
+                  <span>🛑 SL: <strong class="text-red-400">${stopLossPrice ? '₹' + Number(stopLossPrice).toLocaleString('en-IN') + ' (-' + t.stopLossPct + '%)' : '-'}</strong></span>
+                </div>
+                <div class="text-[10px] text-gray-400 mt-0.5">📅 ${formatDate(t.entryDate)}</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button onclick="promptClose('${t.id}')" class="bg-amber-500 hover:bg-amber-600 text-black text-[11px] font-bold px-2 py-1 rounded">Close</button>
+                <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs px-0.5">✕</button>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center bg-gray-900/60 p-2 rounded border border-gray-700/50 text-xs">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-1">
+                  <span class="text-[10px] text-gray-400">CMP: ₹</span>
+                  <input 
+                    type="number" 
+                    step="0.05" 
+                    value="${currentCmp}" 
+                    onchange="updateManualCmp('${t.id}', this.value)" 
+                    class="w-20 bg-gray-800 border border-gray-600 rounded px-1.5 py-0.5 text-xs text-white focus:outline-none focus:border-emerald-500 font-semibold"
+                  >
+                </div>
+
+                <div class="flex items-center gap-1 text-[9px]">
+                  <span class="inline-block w-1.5 h-1.5 rounded-full ${t.lastUpdatedSource === 'LIVE' ? 'bg-emerald-400 animate-pulse' : t.lastUpdatedSource === 'MANUAL' ? 'bg-amber-400' : 'bg-gray-500'}"></span>
+                  <span class="text-gray-400 font-mono">
+                    ${t.lastUpdatedTime ? `${t.lastUpdatedSource === 'LIVE' ? 'Live' : 'Manual'} @ ${t.lastUpdatedTime}` : 'Not set'}
+                  </span>
+                </div>
+              </div>
+
+              <div class="text-right">
+                <span class="text-[10px] text-gray-400 block">Unrealized P&L</span>
+                <div class="font-bold text-xs ${isGain ? 'text-emerald-400' : 'text-red-400'}">
+                  ${isGain ? '+' : ''}₹${Number(pnlAmount).toLocaleString('en-IN')}
+                </div>
+                <div class="text-[10px] font-semibold ${isGain ? 'text-emerald-400' : 'text-red-400'}">
+                  (${isGain ? '+' : ''}${returnPct}%)
+                </div>
+              </div>
+            </div>
+          `;
+          openTradeList.appendChild(card);
+        });
+      }
+
+      if (closedTrades.length === 0) {
+        closedTradeList.innerHTML = '<p class="text-center text-[11px] text-gray-500 py-2">No closed trades matching search.</p>';
+      } else {
+        closedTrades.forEach(t => {
+          const isProfit = (t.pl || 0) >= 0;
+          const daysHeld = t.holdingDays || getDaysHeld(t.entryDate, t.exitDate);
+          const card = document.createElement('div');
+          card.className = `bg-gray-800 p-2.5 rounded-lg border-l-4 ${isProfit ? 'border-emerald-500' : 'border-red-500'} border-y border-r border-gray-700 flex justify-between items-center`;
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
+                <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || 'NONE'}</span>
+                <span class="text-[9px] bg-blue-900/60 text-blue-300 border border-blue-700/50 px-1 py-0.5 rounded">⏱️ ${daysHeld} ${daysHeld === 1 ? 'day' : 'days'}</span>
+              </div>
+              <div class="text-[10px] text-gray-400 mt-0.5">
+                📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">
+                Buy: ₹${t.buyPrice} | Exit: ₹${t.sellPrice} | Qty: ${t.quantity}
+              </div>
+            </div>
+            <div class="text-right flex items-center gap-2">
+              <div>
+                <div class="text-xs font-bold ${isProfit ? 'text-emerald-400' : 'text-red-400'}">
+                  ${isProfit ? '+' : ''}₹${(t.pl || 0).toLocaleString('en-IN')}
+                </div>
+                <div class="text-[9px] ${isProfit ? 'text-emerald-400' : 'text-red-400'}">
+                  ${isProfit ? '+' : ''}${t.returnPct || '0.00'}%
+                </div>
+              </div>
+              <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs">✕</button>
+            </div>
+          `;
+          closedTradeList.appendChild(card);
+        });
+      }
+    }
+
+    // Modal Controls
+    const dashboardModal = document.getElementById('dashboardModal');
+    const openDashboardBtn = document.getElementById('openDashboardBtn');
+    const closeDashboardBtn = document.getElementById('closeDashboardBtn');
+    const closeDashboardBottomBtn = document.getElementById('closeDashboardBottomBtn');
+
+    openDashboardBtn.addEventListener('click', () => {
+      renderDashboardMetrics();
+      dashboardModal.classList.remove('hidden');
+    });
+
+    closeDashboardBtn.addEventListener('click', () => dashboardModal.classList.add('hidden'));
+    closeDashboardBottomBtn.addEventListener('click', () => dashboardModal.classList.add('hidden'));
+
+    function renderDashboardMetrics() {
+      const closedTrades = trades.filter(t => t.status === 'CLOSED');
+      const totalCount = closedTrades.length;
+
+      const wins = closedTrades.filter(t => (t.pl || 0) > 0);
+      const losses = closedTrades.filter(t => (t.pl || 0) < 0);
+
+      const totalGains = wins.reduce((sum, t) => sum + (t.pl || 0), 0);
+      const totalLosses = losses.reduce((sum, t) => sum + Math.abs(t.pl || 0), 0);
+
+      const avgWin = wins.length > 0 ? Math.round(totalGains / wins.length) : 0;
+      const totalDays = closedTrades.reduce((sum, t) => sum + (t.holdingDays || getDaysHeld(t.entryDate, t.exitDate)), 0);
+      const avgHolding = totalCount > 0 ? (totalDays / totalCount).toFixed(1) : 0;
+
+      document.getElementById('dashTotalTrades').innerText = totalCount;
+      document.getElementById('dashWinCount').innerText = wins.length;
+      document.getElementById('dashLossCount').innerText = losses.length;
+      document.getElementById('dashTotalGains').innerText = `₹${totalGains.toLocaleString('en-IN')}`;
+      document.getElementById('dashTotalLosses').innerText = `₹${totalLosses.toLocaleString('en-IN')}`;
+      document.getElementById('dashAvgWin').innerText = `₹${avgWin.toLocaleString('en-IN')}`;
+      document.getElementById('dashAvgHolding').innerText = `${avgHolding} days`;
+
+      const setupListEl = document.getElementById('setupInsightsList');
+      setupListEl.innerHTML = '';
+
+      const setups = [
+        'DARVAS BOX',
+        'SUPER BREAKOUT',
+        'RSI CROSSES BELOW 30',
+        'RSI 14 CROSSES ABOVE SMA RSI 20',
+        'EMA14 CROSS SMA44 COMBINED RSI VOLUME'
+      ];
+
+      setups.forEach(s => {
+        const matchingClosed = closedTrades.filter(t => t.setup === s);
+        const count = matchingClosed.length;
+        if (count > 0) {
+          const sWins = matchingClosed.filter(t => (t.pl || 0) > 0).length;
+          const sWinRate = Math.round((sWins / count) * 100);
+          const sPl = matchingClosed.reduce((acc, t) => acc + (t.pl || 0), 0);
+          
+          const row = document.createElement('div');
+          row.className = 'bg-gray-800 p-2 rounded border border-gray-700/80 flex justify-between items-center';
+          row.innerHTML = `
+            <div>
+              <div class="font-medium text-gray-200 text-[10px]">${s}</div>
+              <div class="text-[9px] text-gray-400">Trades: ${count} | Win Rate: <span class="text-emerald-400">${sWinRate}%</span></div>
+            </div>
+            <div class="text-right font-bold text-[11px] ${sPl >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+              ${sPl >= 0 ? '+' : ''}₹${sPl.toLocaleString('en-IN')}
+            </div>
+          `;
+          setupListEl.appendChild(row);
+        }
+      });
+
+      if (setupListEl.innerHTML === '') {
+        setupListEl.innerHTML = '<p class="text-[10px] text-gray-500 italic">No closed trade data available for strategies yet.</p>';
+      }
+    }
+
+    // Initial Load
+    loadTradesFromSheet();
+  </script>
+</body>
 </html>
