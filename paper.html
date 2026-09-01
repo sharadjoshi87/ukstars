@@ -938,34 +938,44 @@
             const isProfit = (t.pl || 0) >= 0;
             const daysHeld =
               t.holdingDays || getDaysHeld(t.entryDate, t.exitDate);
+
+            // 💡 FIX: Define displayExitPrice inside the loop before card.innerHTML
+            const displayExitPrice =
+              t.sellPrice !== null &&
+              t.sellPrice !== undefined &&
+              !isNaN(t.sellPrice)
+                ? Number(t.sellPrice).toLocaleString("en-IN")
+                : "N/A";
+
             const card = document.createElement("div");
             card.className = `bg-gray-800 p-2.5 rounded-lg border-l-4 ${isProfit ? "border-emerald-500" : "border-red-500"} border-y border-r border-gray-700 flex justify-between items-center`;
+
             card.innerHTML = `
-            <div>
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
-                <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || "NONE"}</span>
-                <span class="text-[9px] bg-blue-900/60 text-blue-300 border border-blue-700/50 px-1 py-0.5 rounded">⏱️ ${daysHeld} ${daysHeld === 1 ? "day" : "days"}</span>
-              </div>
-              <div class="text-[10px] text-gray-400 mt-0.5">
-                📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
-              </div>
-              <div class="text-[11px] text-gray-400 mt-0.5">
-                Buy: ₹${t.buyPrice} | Exit: ₹${displayExitPrice} | Qty: ${t.quantity}
-              </div>
-            </div>
-            <div class="text-right flex items-center gap-2">
-              <div>
-                <div class="text-xs font-bold ${isProfit ? "text-emerald-400" : "text-red-400"}">
-                  ${isProfit ? "+" : ""}₹${(t.pl || 0).toLocaleString("en-IN")}
-                </div>
-                <div class="text-[9px] ${isProfit ? "text-emerald-400" : "text-red-400"}">
-                  ${isProfit ? "+" : ""}${t.returnPct || "0.00"}%
-                </div>
-              </div>
-              <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs">✕</button>
-            </div>
-          `;
+    <div>
+      <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="font-bold text-gray-100 text-xs">${t.symbol}</span>
+        <span class="text-[9px] bg-gray-700 text-gray-300 px-1 py-0.5 rounded">${t.setup || "NONE"}</span>
+        <span class="text-[9px] bg-blue-900/60 text-blue-300 border border-blue-700/50 px-1 py-0.5 rounded">⏱️ ${daysHeld} ${daysHeld === 1 ? "day" : "days"}</span>
+      </div>
+      <div class="text-[10px] text-gray-400 mt-0.5">
+        📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
+      </div>
+      <div class="text-[11px] text-gray-400 mt-0.5">
+        Buy: ₹${t.buyPrice} | Exit: ₹${displayExitPrice} | Qty: ${t.quantity}
+      </div>
+    </div>
+    <div class="text-right flex items-center gap-2">
+      <div>
+        <div class="text-xs font-bold ${isProfit ? "text-emerald-400" : "text-red-400"}">
+          ${isProfit ? "+" : ""}₹${(t.pl || 0).toLocaleString("en-IN")}
+        </div>
+        <div class="text-[9px] ${isProfit ? "text-emerald-400" : "text-red-400"}">
+          ${isProfit ? "+" : ""}${t.returnPct || "0.00"}%
+        </div>
+      </div>
+      <button onclick="deleteTrade('${t.id}')" class="text-gray-500 hover:text-red-400 text-xs">✕</button>
+    </div>
+  `;
             closedTradeList.appendChild(card);
           });
         }
