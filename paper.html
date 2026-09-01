@@ -468,7 +468,17 @@
               lastUpdatedSource: item.lastUpdatedSource || "MANUAL",
               lastUpdatedTime: item.lastUpdatedTime || "",
               status: item.status || "OPEN",
-              sellPrice: item.exitPrice ? parseFloat(item.exitPrice) : null,
+              // 💡 FIX: Explicitly parse sellPrice/exitPrice with fallback
+              sellPrice:
+                item.sellPrice !== "" &&
+                item.sellPrice !== undefined &&
+                item.sellPrice !== null
+                  ? parseFloat(item.sellPrice)
+                  : item.exitPrice !== "" &&
+                      item.exitPrice !== undefined &&
+                      item.exitPrice !== null
+                    ? parseFloat(item.exitPrice)
+                    : null,
               pl: item.pl ? parseFloat(item.pl) : null,
               returnPct: item.returnPct ? parseFloat(item.returnPct) : null,
             }));
@@ -837,17 +847,24 @@
             }
 
             // Helper to safely parse numbers or display a placeholder
-            const exitPrice =
-              t.sellPrice !== "" &&
+            // const exitPrice =
+            //   t.sellPrice !== "" &&
+            //   t.sellPrice !== null &&
+            //   t.sellPrice !== undefined &&
+            //   !isNaN(t.sellPrice)
+            //     ? Number(t.sellPrice).toLocaleString("en-IN")
+            //     : t.exitPrice !== "" &&
+            //         t.exitPrice !== null &&
+            //         !isNaN(t.exitPrice)
+            //       ? Number(t.exitPrice).toLocaleString("en-IN")
+            //       : "N/A";
+            // Replace old Exit string with this safe fallback
+            const displayExitPrice =
               t.sellPrice !== null &&
               t.sellPrice !== undefined &&
               !isNaN(t.sellPrice)
                 ? Number(t.sellPrice).toLocaleString("en-IN")
-                : t.exitPrice !== "" &&
-                    t.exitPrice !== null &&
-                    !isNaN(t.exitPrice)
-                  ? Number(t.exitPrice).toLocaleString("en-IN")
-                  : "N/A";
+                : "N/A";
 
             const card = document.createElement("div");
             card.className =
@@ -934,7 +951,7 @@
                 📅 ${formatDate(t.entryDate)} ➔ ${formatDate(t.exitDate)}
               </div>
               <div class="text-[11px] text-gray-400 mt-0.5">
-                Buy: ₹${t.buyPrice} | Exit: ₹${getExitPrice(t)} | Qty: ${t.quantity}
+                Buy: ₹${t.buyPrice} | Exit: ₹${displayExitPrice} | Qty: ${t.quantity}
               </div>
             </div>
             <div class="text-right flex items-center gap-2">
