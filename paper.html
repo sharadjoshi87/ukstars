@@ -266,31 +266,83 @@
             ✕
           </button>
         </div>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Total Trades</span
-            ><strong id="dashTotalTrades" class="text-white">0</strong>
+        <!-- Analytics Dashboard Modal Content -->
+        <div class="space-y-3">
+          <!-- Open Positions Overview -->
+          <div
+            class="bg-gray-900/80 border border-amber-500/30 p-2.5 rounded-lg space-y-2"
+          >
+            <h4
+              class="text-[10px] font-bold text-amber-400 uppercase tracking-wider"
+            >
+              Open Positions (Unrealized)
+            </h4>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <span class="text-gray-400 text-[10px] block">Invested</span>
+                <strong id="dashOpenInvested" class="text-white">₹0</strong>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block"
+                  >Current Value</span
+                >
+                <strong id="dashOpenCurrent" class="text-white">₹0</strong>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block"
+                  >Unrealized P&L</span
+                >
+                <strong id="dashOpenPl" class="text-gray-200">₹0 (0%)</strong>
+              </div>
+            </div>
           </div>
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Wins / Losses</span
-            ><span class="text-emerald-400 font-bold" id="dashWinCount">0</span>
-            / <span class="text-red-400 font-bold" id="dashLossCount">0</span>
-          </div>
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Total Profit</span
-            ><strong id="dashTotalGains" class="text-emerald-400">₹0</strong>
-          </div>
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Total Loss</span
-            ><strong id="dashTotalLosses" class="text-red-400">₹0</strong>
-          </div>
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Avg Win Amount</span
-            ><strong id="dashAvgWin" class="text-gray-200">₹0</strong>
-          </div>
-          <div class="bg-gray-900 p-2 rounded">
-            <span class="text-gray-400 text-[10px] block">Avg Holding Time</span
-            ><strong id="dashAvgHolding" class="text-gray-200">0 days</strong>
+
+          <!-- Closed Trades Performance -->
+          <div
+            class="bg-gray-900/80 border border-gray-700/80 p-2.5 rounded-lg space-y-2"
+          >
+            <h4
+              class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+            >
+              Closed History (Realized)
+            </h4>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <span class="text-gray-400 text-[10px] block">Total Trades</span
+                ><strong id="dashTotalTrades" class="text-white">0</strong>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block"
+                  >Wins / Losses</span
+                ><span class="text-emerald-400 font-bold" id="dashWinCount"
+                  >0</span
+                >
+                /
+                <span class="text-red-400 font-bold" id="dashLossCount">0</span>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block">Total Profit</span
+                ><strong id="dashTotalGains" class="text-emerald-400"
+                  >₹0</strong
+                >
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block">Total Loss</span
+                ><strong id="dashTotalLosses" class="text-red-400">₹0</strong>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block"
+                  >Avg Win Amount</span
+                ><strong id="dashAvgWin" class="text-gray-200">₹0</strong>
+              </div>
+              <div>
+                <span class="text-gray-400 text-[10px] block"
+                  >Avg Holding Time</span
+                ><strong id="dashAvgHolding" class="text-gray-200"
+                  >0 days</strong
+                >
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -1037,6 +1089,43 @@
       );
 
       function renderDashboardMetrics() {
+        // --- 1. OPEN POSITIONS CALCULATIONS ---
+        const openTrades = trades.filter((t) => t.status === "OPEN");
+
+        let totalInvested = 0;
+        let totalCurrentVal = 0;
+
+        openTrades.forEach((t) => {
+          const buyPrice = parseFloat(t.buyPrice || 0);
+          const cmp = parseFloat(t.cmp || t.buyPrice || 0);
+          const qty = parseInt(t.quantity || 0);
+
+          totalInvested += buyPrice * qty;
+          totalCurrentVal += cmp * qty;
+        });
+
+        const unrealizedPl = totalCurrentVal - totalInvested;
+        const unrealizedReturnPct =
+          totalInvested > 0
+            ? ((unrealizedPl / totalInvested) * 100).toFixed(2)
+            : "0.00";
+        const isUnrealizedGain = unrealizedPl >= 0;
+
+        // Render Open Positions
+        const openInvestedEl = document.getElementById("dashOpenInvested");
+        const openCurrentEl = document.getElementById("dashOpenCurrent");
+        const openPlEl = document.getElementById("dashOpenPl");
+
+        if (openInvestedEl)
+          openInvestedEl.innerText = `₹${Math.round(totalInvested).toLocaleString("en-IN")}`;
+        if (openCurrentEl)
+          openCurrentEl.innerText = `₹${Math.round(totalCurrentVal).toLocaleString("en-IN")}`;
+        if (openPlEl) {
+          openPlEl.innerText = `${isUnrealizedGain ? "+" : ""}₹${Math.round(unrealizedPl).toLocaleString("en-IN")} (${isUnrealizedGain ? "+" : ""}${unrealizedReturnPct}%)`;
+          openPlEl.className = `font-bold ${isUnrealizedGain ? "text-emerald-400" : "text-red-400"}`;
+        }
+
+        // --- 2. CLOSED TRADES CALCULATIONS ---
         const closedTrades = trades.filter((t) => t.status === "CLOSED");
         const totalCount = closedTrades.length;
 
@@ -1059,56 +1148,72 @@
         const avgHolding =
           totalCount > 0 ? (totalDays / totalCount).toFixed(1) : 0;
 
-        document.getElementById("dashTotalTrades").innerText = totalCount;
-        document.getElementById("dashWinCount").innerText = wins.length;
-        document.getElementById("dashLossCount").innerText = losses.length;
-        document.getElementById("dashTotalGains").innerText =
-          `₹${totalGains.toLocaleString("en-IN")}`;
-        document.getElementById("dashTotalLosses").innerText =
-          `₹${totalLosses.toLocaleString("en-IN")}`;
-        document.getElementById("dashAvgWin").innerText =
-          `₹${avgWin.toLocaleString("en-IN")}`;
-        document.getElementById("dashAvgHolding").innerText =
-          `${avgHolding} days`;
+        const totalTradesEl = document.getElementById("dashTotalTrades");
+        const winCountEl = document.getElementById("dashWinCount");
+        const lossCountEl = document.getElementById("dashLossCount");
+        const totalGainsEl = document.getElementById("dashTotalGains");
+        const totalLossesEl = document.getElementById("dashTotalLosses");
+        const avgWinEl = document.getElementById("dashAvgWin");
+        const avgHoldingEl = document.getElementById("dashAvgHolding");
 
+        if (totalTradesEl) totalTradesEl.innerText = totalCount;
+        if (winCountEl) winCountEl.innerText = wins.length;
+        if (lossCountEl) lossCountEl.innerText = losses.length;
+        if (totalGainsEl)
+          totalGainsEl.innerText = `₹${totalGains.toLocaleString("en-IN")}`;
+        if (totalLossesEl)
+          totalLossesEl.innerText = `₹${totalLosses.toLocaleString("en-IN")}`;
+        if (avgWinEl) avgWinEl.innerText = `₹${avgWin.toLocaleString("en-IN")}`;
+        if (avgHoldingEl) avgHoldingEl.innerText = `${avgHolding} days`;
+
+        // --- 3. STRATEGY BREAKDOWN ---
         const setupListEl = document.getElementById("setupInsightsList");
-        setupListEl.innerHTML = "";
+        if (setupListEl) {
+          setupListEl.innerHTML = "";
 
-        const setups = [
-          "DARVAS BOX",
-          "SUPER BREAKOUT",
-          "RSI CROSSES BELOW 30",
-          "RSI 14 CROSSES ABOVE SMA RSI 20",
-          "EMA14 CROSS SMA44 COMBINED RSI VOLUME",
-        ];
+          // Group closed trades dynamically by setup name
+          const setupMap = {};
+          closedTrades.forEach((t) => {
+            const setupName =
+              t.setup && t.setup.trim() !== ""
+                ? t.setup.trim()
+                : "OTHER / UNASSIGNED";
+            if (!setupMap[setupName]) {
+              setupMap[setupName] = { count: 0, wins: 0, pl: 0 };
+            }
+            setupMap[setupName].count += 1;
+            if ((t.pl || 0) > 0) setupMap[setupName].wins += 1;
+            setupMap[setupName].pl += t.pl || 0;
+          });
 
-        setups.forEach((s) => {
-          const matchingClosed = closedTrades.filter((t) => t.setup === s);
-          const count = matchingClosed.length;
-          if (count > 0) {
-            const sWins = matchingClosed.filter((t) => (t.pl || 0) > 0).length;
-            const sWinRate = Math.round((sWins / count) * 100);
-            const sPl = matchingClosed.reduce((acc, t) => acc + (t.pl || 0), 0);
+          const setupKeys = Object.keys(setupMap);
 
-            const row = document.createElement("div");
-            row.className =
-              "bg-gray-800 p-2 rounded border border-gray-700/80 flex justify-between items-center";
-            row.innerHTML = `
-            <div>
-              <div class="font-medium text-gray-200 text-[10px]">${s}</div>
-              <div class="text-[9px] text-gray-400">Trades: ${count} | Win Rate: <span class="text-emerald-400">${sWinRate}%</span></div>
+          if (setupKeys.length > 0) {
+            setupKeys.forEach((s) => {
+              const data = setupMap[s];
+              const winRate = Math.round((data.wins / data.count) * 100);
+              const isPositive = data.pl >= 0;
+
+              const row = document.createElement("div");
+              row.className =
+                "bg-gray-800/90 p-2 rounded border border-gray-700/80 flex justify-between items-center";
+              row.innerHTML = `
+          <div>
+            <div class="font-medium text-gray-200 text-[10px]">${s}</div>
+            <div class="text-[9px] text-gray-400">
+              Trades: ${data.count} | Win Rate: <span class="${winRate >= 50 ? "text-emerald-400" : "text-amber-400"}">${winRate}%</span>
             </div>
-            <div class="text-right font-bold text-[11px] ${sPl >= 0 ? "text-emerald-400" : "text-red-400"}">
-              ${sPl >= 0 ? "+" : ""}₹${sPl.toLocaleString("en-IN")}
-            </div>
-          `;
-            setupListEl.appendChild(row);
+          </div>
+          <div class="text-right font-bold text-[11px] ${isPositive ? "text-emerald-400" : "text-red-400"}">
+            ${isPositive ? "+" : ""}₹${data.pl.toLocaleString("en-IN")}
+          </div>
+        `;
+              setupListEl.appendChild(row);
+            });
+          } else {
+            setupListEl.innerHTML =
+              '<p class="text-[10px] text-gray-500 italic">No closed trade data available for strategies yet.</p>';
           }
-        });
-
-        if (setupListEl.innerHTML === "") {
-          setupListEl.innerHTML =
-            '<p class="text-[10px] text-gray-500 italic">No closed trade data available for strategies yet.</p>';
         }
       }
 
